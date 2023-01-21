@@ -10,7 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_21_154327) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_21_161454) do
+  create_table "collections", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "title"
+    t.text "desc"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "collections_courses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "collections_id"
+    t.bigint "courses_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["collections_id"], name: "index_collections_courses_on_collections_id"
+    t.index ["courses_id"], name: "index_collections_courses_on_courses_id"
+  end
+
   create_table "courses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "title"
     t.text "desc"
@@ -27,16 +43,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_21_154327) do
     t.datetime "updated_at", null: false
     t.bigint "courses_id"
     t.index ["courses_id"], name: "index_vocabularies_on_courses_id"
-  end
-
-  create_table "vocaublaries", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "word"
-    t.text "define"
-    t.text "link"
-    t.integer "type"
-    t.string "part_number"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   add_foreign_key "vocabularies", "courses", column: "courses_id"
