@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_21_162512) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_21_180626) do
   create_table "collections", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "title"
     t.text "desc"
@@ -23,8 +23,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_21_162512) do
     t.bigint "courses_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["collections_id", "courses_id"], name: "index_collections_courses_on_collections_id_and_courses_id", unique: true
     t.index ["collections_id"], name: "index_collections_courses_on_collections_id"
     t.index ["courses_id"], name: "index_collections_courses_on_courses_id"
+  end
+
+  create_table "comments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.text "content"
+    t.bigint "users_id"
+    t.bigint "courses_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["courses_id"], name: "index_comments_on_courses_id"
+    t.index ["users_id", "courses_id"], name: "index_comments_on_users_id_and_courses_id", unique: true
+    t.index ["users_id"], name: "index_comments_on_users_id"
   end
 
   create_table "courses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
