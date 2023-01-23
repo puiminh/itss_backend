@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_23_024645) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_23_031531) do
   create_table "bookmark_collections", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "users_id"
     t.bigint "collections_id"
@@ -36,6 +36,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_23_024645) do
     t.text "desc"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "image"
   end
 
   create_table "collections_courses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -102,6 +103,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_23_024645) do
     t.string "last_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "avatar"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
