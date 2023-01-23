@@ -1,4 +1,4 @@
-class Appointment < ApplicationRecord
-    belongs_to :courses
-    belongs_to :collections
+class CollectionsCourse < ApplicationRecord
+    belongs_to :course
+    belongs_to :collection
   end

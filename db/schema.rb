@@ -12,23 +12,23 @@
 
 ActiveRecord::Schema[7.0].define(version: 2023_01_23_031531) do
   create_table "bookmark_collections", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "users_id"
-    t.bigint "collections_id"
+    t.bigint "user_id"
+    t.bigint "collection_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["collections_id"], name: "index_bookmark_collections_on_collections_id"
-    t.index ["users_id", "collections_id"], name: "index_bookmark_collections_on_users_id_and_collections_id", unique: true
-    t.index ["users_id"], name: "index_bookmark_collections_on_users_id"
+    t.index ["collection_id"], name: "index_bookmark_collections_on_collection_id"
+    t.index ["user_id", "collection_id"], name: "index_bookmark_collections_on_user_id_and_collection_id", unique: true
+    t.index ["user_id"], name: "index_bookmark_collections_on_user_id"
   end
 
   create_table "bookmark_courses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "users_id"
-    t.bigint "courses_id"
+    t.bigint "user_id"
+    t.bigint "course_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["courses_id"], name: "index_bookmark_courses_on_courses_id"
-    t.index ["users_id", "courses_id"], name: "index_bookmark_courses_on_users_id_and_courses_id", unique: true
-    t.index ["users_id"], name: "index_bookmark_courses_on_users_id"
+    t.index ["course_id"], name: "index_bookmark_courses_on_course_id"
+    t.index ["user_id", "course_id"], name: "index_bookmark_courses_on_user_id_and_course_id", unique: true
+    t.index ["user_id"], name: "index_bookmark_courses_on_user_id"
   end
 
   create_table "collections", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -40,24 +40,24 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_23_031531) do
   end
 
   create_table "collections_courses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "collections_id"
-    t.bigint "courses_id"
+    t.bigint "collection_id"
+    t.bigint "course_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["collections_id", "courses_id"], name: "index_collections_courses_on_collections_id_and_courses_id", unique: true
-    t.index ["collections_id"], name: "index_collections_courses_on_collections_id"
-    t.index ["courses_id"], name: "index_collections_courses_on_courses_id"
+    t.index ["collection_id", "course_id"], name: "index_collections_courses_on_collection_id_and_course_id", unique: true
+    t.index ["collection_id"], name: "index_collections_courses_on_collection_id"
+    t.index ["course_id"], name: "index_collections_courses_on_course_id"
   end
 
   create_table "comments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.text "content"
-    t.bigint "users_id"
-    t.bigint "courses_id"
+    t.bigint "user_id"
+    t.bigint "course_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["courses_id"], name: "index_comments_on_courses_id"
-    t.index ["users_id", "courses_id"], name: "index_comments_on_users_id_and_courses_id", unique: true
-    t.index ["users_id"], name: "index_comments_on_users_id"
+    t.index ["course_id"], name: "index_comments_on_course_id"
+    t.index ["user_id", "course_id"], name: "index_comments_on_user_id_and_course_id", unique: true
+    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "courses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -69,26 +69,26 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_23_031531) do
 
   create_table "progresses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "point"
-    t.bigint "users_id"
-    t.bigint "courses_id"
-    t.bigint "vocabularies_id"
+    t.bigint "user_id"
+    t.bigint "course_id"
+    t.bigint "vocabulary_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["courses_id"], name: "index_progresses_on_courses_id"
-    t.index ["users_id", "courses_id", "vocabularies_id"], name: "index_progresses_on_users_id_and_courses_id_and_vocabularies_id", unique: true
-    t.index ["users_id"], name: "index_progresses_on_users_id"
-    t.index ["vocabularies_id"], name: "index_progresses_on_vocabularies_id"
+    t.index ["course_id"], name: "index_progresses_on_course_id"
+    t.index ["user_id", "course_id", "vocabulary_id"], name: "index_progresses_on_user_id_and_course_id_and_vocabulary_id", unique: true
+    t.index ["user_id"], name: "index_progresses_on_user_id"
+    t.index ["vocabulary_id"], name: "index_progresses_on_vocabulary_id"
   end
 
   create_table "ratings", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "star"
-    t.bigint "users_id"
-    t.bigint "courses_id"
+    t.bigint "user_id"
+    t.bigint "course_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["courses_id"], name: "index_ratings_on_courses_id"
-    t.index ["users_id", "courses_id"], name: "index_ratings_on_users_id_and_courses_id", unique: true
-    t.index ["users_id"], name: "index_ratings_on_users_id"
+    t.index ["course_id"], name: "index_ratings_on_course_id"
+    t.index ["user_id", "course_id"], name: "index_ratings_on_user_id_and_course_id", unique: true
+    t.index ["user_id"], name: "index_ratings_on_user_id"
   end
 
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -112,12 +112,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_23_031531) do
     t.string "word"
     t.text "define"
     t.text "link"
-    t.integer "type"
+    t.integer "kind"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "courses_id"
-    t.index ["courses_id"], name: "index_vocabularies_on_courses_id"
+    t.bigint "course_id"
+    t.index ["course_id"], name: "index_vocabularies_on_course_id"
   end
 
-  add_foreign_key "vocabularies", "courses", column: "courses_id"
+  add_foreign_key "vocabularies", "courses"
 end

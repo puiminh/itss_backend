@@ -4,7 +4,7 @@ class CreateVocabularies < ActiveRecord::Migration[7.0]
       t.string :word
       t.text :define
       t.text :link
-      t.integer :type
+      t.integer :kind
 
       t.timestamps
     end
