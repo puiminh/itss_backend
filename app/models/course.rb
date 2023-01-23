@@ -8,4 +8,17 @@ class Course < ApplicationRecord
 
     has_many :comments
     has_many :users, through: :comments
+
+    has_many :ratings
+    has_many :users, through: :ratings
+
+    has_many :progresses
+    has_many :vocabularies, through: :progresses
+    has_many :users, through: :progresses
+
+    has_many :bookmark_collections
+    has_many :users, through: :bookmark_collections
+
+    has_many :bookmark_courses
+    has_many :users, through: :bookmark_courses
 end

@@ -10,7 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_21_180626) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_23_024645) do
+  create_table "bookmark_collections", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "users_id"
+    t.bigint "collections_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["collections_id"], name: "index_bookmark_collections_on_collections_id"
+    t.index ["users_id", "collections_id"], name: "index_bookmark_collections_on_users_id_and_collections_id", unique: true
+    t.index ["users_id"], name: "index_bookmark_collections_on_users_id"
+  end
+
+  create_table "bookmark_courses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "users_id"
+    t.bigint "courses_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["courses_id"], name: "index_bookmark_courses_on_courses_id"
+    t.index ["users_id", "courses_id"], name: "index_bookmark_courses_on_users_id_and_courses_id", unique: true
+    t.index ["users_id"], name: "index_bookmark_courses_on_users_id"
+  end
+
   create_table "collections", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "title"
     t.text "desc"
@@ -44,6 +64,30 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_21_180626) do
     t.text "desc"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "progresses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.integer "point"
+    t.bigint "users_id"
+    t.bigint "courses_id"
+    t.bigint "vocabularies_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["courses_id"], name: "index_progresses_on_courses_id"
+    t.index ["users_id", "courses_id", "vocabularies_id"], name: "index_progresses_on_users_id_and_courses_id_and_vocabularies_id", unique: true
+    t.index ["users_id"], name: "index_progresses_on_users_id"
+    t.index ["vocabularies_id"], name: "index_progresses_on_vocabularies_id"
+  end
+
+  create_table "ratings", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.integer "star"
+    t.bigint "users_id"
+    t.bigint "courses_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["courses_id"], name: "index_ratings_on_courses_id"
+    t.index ["users_id", "courses_id"], name: "index_ratings_on_users_id_and_courses_id", unique: true
+    t.index ["users_id"], name: "index_ratings_on_users_id"
   end
 
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
