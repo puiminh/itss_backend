@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_23_031531) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_24_191012) do
   create_table "bookmark_collections", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "collection_id"
@@ -37,6 +37,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_23_031531) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "image"
+    t.bigint "author_id"
+    t.index ["author_id"], name: "index_collections_on_author_id"
   end
 
   create_table "collections_courses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -65,6 +67,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_23_031531) do
     t.text "desc"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "author_id"
+    t.index ["author_id"], name: "index_courses_on_author_id"
   end
 
   create_table "progresses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -119,5 +123,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_23_031531) do
     t.index ["course_id"], name: "index_vocabularies_on_course_id"
   end
 
+  add_foreign_key "collections", "users", column: "author_id"
+  add_foreign_key "courses", "users", column: "author_id"
   add_foreign_key "vocabularies", "courses"
 end

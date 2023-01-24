@@ -1,4 +1,5 @@
 class Course < ApplicationRecord
+    belongs_to :author, class_name: 'User'
     # 1-n 
     has_many :vocabularies
 
