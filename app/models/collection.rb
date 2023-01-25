@@ -4,4 +4,6 @@ class Collection < ApplicationRecord
 
     has_many :bookmark_collections
     # has_many :users, through: :bookmark_collections
+
+    belongs_to :author, class_name: 'User'
 end

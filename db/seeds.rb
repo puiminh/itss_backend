@@ -7,7 +7,7 @@
 #   Character.create(name: "Luke", movie: movies.first)
 
 # generate 20 users
-(1..20).each do |id|
+(1..50).each do |id|
     User.create!(
         # each user is assigned an id from 1-20
         id: id, 
@@ -18,6 +18,7 @@
         # issue each user the same password
         password: "123456", 
         password_confirmation: "123456",
+        user_name:Faker::Internet.username,
         # a user can have only one of these roles
         role: Faker::Number.within(range: 0..1)
     )
@@ -25,12 +26,13 @@ end
 
 
 # Course
-(1..10).each do |id|
+(1..40).each do |id|
     Course.create!(
         # each user is assigned an id from 1-20
         id: id, 
         title: Faker::Book.title,
-        desc: Faker::Lorem.paragraph    
+        desc: Faker::Lorem.paragraph,
+        author: User.find(Faker::Number.within(range: 1..20))  
     )
 end
 
@@ -48,13 +50,13 @@ end
 end
 
 # Comment
-(1..50).each do |id|
+(1..20).each do |id|
     Comment.create!(
         # each user is assigned an id from 1-20
         id: id, 
         content: Faker::Lorem.sentence,
-        course: Course.find(Faker::Number.within(range: 1..10)),
-        user: User.find(Faker::Number.within(range: 1..20))
+        course: Course.find(Faker::Number.within(range: 1..40)),
+        user: User.find(Faker::Number.within(range: 1..50))
     )
 end
 
@@ -64,8 +66,8 @@ end
         # each user is assigned an id from 1-20
         id: id, 
         star: Faker::Number.within(range: 1..5),
-        course: Course.find(Faker::Number.within(range: 1..10)),
-        user: User.find(Faker::Number.within(range: 1..20))
+        course: Course.find(Faker::Number.within(range: 1..40)),
+        user: User.find(Faker::Number.within(range: 1..50))
     )
 end
 
@@ -76,8 +78,8 @@ end
         # each user is assigned an id from 1-20
         id: id, 
         point: Faker::Number.within(range: 1..1000),
-        course: Course.find(Faker::Number.within(range: 1..10)),
-        user: User.find(Faker::Number.within(range: 1..20)),
+        course: Course.find(Faker::Number.within(range: 1..40)),
+        user: User.find(Faker::Number.within(range: 1..50)),
         vocabulary: Vocabulary.find(Faker::Number.within(range: 1..10))
     )
 end
@@ -91,7 +93,8 @@ end
         id: id, 
         title: Faker::Educator.course_name,
         desc: Faker::Lorem.paragraph,
-        image: Faker::LoremFlickr.image
+        image: Faker::LoremFlickr.image,
+        author: User.find(Faker::Number.within(range: 1..20))
     )
 end
 
@@ -121,6 +124,6 @@ end
         # each user is assigned an id from 1-20
         id: id, 
         collection: Collection.find(Faker::Number.within(range: 1..10)),
-        user: User.find(Faker::Number.within(range: 1..10))
+        user: User.find(Faker::Number.within(range: 1..50))
     )
 end
