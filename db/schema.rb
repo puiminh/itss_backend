@@ -10,13 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema[7.0].define(version: 2023_01_23_031531) do
-  create_table "bookmark_collections", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
-=======
+
 ActiveRecord::Schema[7.0].define(version: 2023_01_24_191012) do
-  create_table "bookmark_collections", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
->>>>>>> ecff1d05a5e208c655d14abd5af749bcbb220439
+  create_table "bookmark_collections", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "collection_id"
     t.datetime "created_at", null: false

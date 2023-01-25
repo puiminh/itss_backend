@@ -5,7 +5,10 @@ class CoursesController < ApplicationController
         course_list = []
         progresses = User.find_by(id: params[:user_id]).progresses.group(:course_id).order(updated_at: :desc).limit(8)
         progresses.each do |progress|
-            course_list << progress.course
+            course_list << {
+                course: progress.course,
+                progress: progress
+            }
         end
 
         render json: {
@@ -18,8 +21,8 @@ class CoursesController < ApplicationController
         courses = Course.all
         courses.each do |course|
             recommended_courses << {
-                course_id: course.id,
-                course_title: course.title,
+                course: course,
+                author: course.author,
                 rating: {
                     sum: course.ratings.sum(:star),
                     avg: course.ratings.average(:star)
@@ -48,8 +51,9 @@ class CoursesController < ApplicationController
 
             recommended_collections << {
                 collection: collection,
+                author: collection.author,
                 bookmark_collections: bookmark_collections_newest.count,
-                bookmark_user: users
+                bookmark_users: users
             }
         end
 
@@ -57,5 +61,59 @@ class CoursesController < ApplicationController
         render json: {
             data: recommended_collections
         }, status: 200
+    end
+
+    def duplicate_course
+        user_id = params[:user_id].to_i
+        course_id = params[:course_id].to_i
+        course = Course.find(course_id)
+        vocabularies = course.vocabularies
+        new_course = Course.create({
+            title: course.title+"_copy",
+            desc: course.desc,
+            author_id: user_id,
+        })
+        vocabularies.map do |vocab|
+            new_course.vocabularies.create({
+                word: vocab.word,
+                define: vocab.define,
+                link: vocab.link,
+                kind: vocab.kind,
+                course_id: new_course.id
+            })
+        end
+
+        render json: {
+            course: new_course,
+        }, status: 200
+    end
+
+    def progress
+        user_id = params[:user_id].to_i
+        course_id = params[:course_id].to_i
+        vocabulary_id = params[:vocabulary_id].to_i
+        progress = Progress.find_by(user_id: user_id, course_id: course_id, vocabulary_id: vocabulary_id)
+        if !progress 
+            progress = Progress.create({
+                point: params[:point].to_i,
+                user_id: user_id,
+                course_id: course_id,
+                vocabulary_id: vocabulary_id 
+            })
+            render json: {
+                mess: "New progress created sucess"
+            }, status: 200
+        else
+            progress.point += params[:point].to_i
+            if progress.save
+                render json: {
+                    mess: "Success"
+                }, status: 200
+            else
+                render json: {
+                    errors: "Failed to save"
+                }, status: 400
+            end
+        end
     end
 end
