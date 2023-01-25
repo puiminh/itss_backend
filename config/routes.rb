@@ -8,4 +8,5 @@ Rails.application.routes.draw do
   # Vu Tuan Kiet
   get "api/recent_courses/:user_id", to: "courses#recent_courses", as: "recent_courses"
   get "api/recommended_courses", to: "courses#recommended_courses", as: "recommended_courses"
+  get "api/recommended_collections", to: "courses#recommended_collections", as: "recommended_collections"
 end
