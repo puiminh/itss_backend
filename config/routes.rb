@@ -6,9 +6,14 @@ Rails.application.routes.draw do
   # root "articles#index"
 
   # Vu Tuan Kiet
-  get "api/recent_courses/:user_id", to: "courses#recent_courses", as: "recent_courses"
-  get "api/recommended_courses", to: "courses#recommended_courses", as: "recommended_courses"
-  get "api/recommended_collections", to: "courses#recommended_collections", as: "recommended_collections"
-  post "api/duplicate_course/:user_id", to: "courses#duplicate_course", as: "duplicate_course"
-  post "api/progress/", to: "courses#progress", as: "progress"
+  namespace :api do
+    resources :courses, only: [:index, :show, :create, :update, :destroy]
+    resources :collections, only: [:index, :show, :create, :update, :destroy]
+    get "/courses/recent/:user_id", to: "courses#recent_courses", as: "recent_courses"
+    get "/courses/recommended", to: "courses#recommended_courses", as: "recommended_courses"
+    get "/collections/recommended", to: "collections#recommended_collections", as: "recommended_collections"
+    post "/collections/courses", to: "collections_courses#add_course_to_collection", as: "add_course_to_collection"
+    post "/courses/duplicate/:user_id", to: "courses#duplicate_course", as: "duplicate_course"
+    post "/progress/update", to: "progresses#update_progress", as: "update_progress"
+  end
 end
