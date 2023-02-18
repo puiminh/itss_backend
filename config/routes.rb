@@ -8,8 +8,8 @@ Rails.application.routes.draw do
   # Vu Tuan Kiet
   namespace :api do
     namespace :v1 do
-      resources :courses, only: [:index, :show, :create, :update, :destroy]
-      resources :collections, only: [:index, :show, :create, :update, :destroy]
+      #resources :courses, only: [:index, :show, :create, :update, :destroy]
+      #resources :collections, only: [:index, :show, :create, :update, :destroy]
 
       #course
       #kiet
