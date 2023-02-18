@@ -7,8 +7,8 @@ Rails.application.routes.draw do
 
   # Vu Tuan Kiet
   namespace :api do
-    resources :courses, only: [:index, :show, :create, :update, :destroy]
-    resources :collections, only: [:index, :show, :create, :update, :destroy]
+    # resources :courses, only: [:index, :show, :create, :update, :destroy]
+    # resources :collections, only: [:index, :show, :create, :update, :destroy]
     get "/courses/recent/:user_id", to: "courses#recent_courses", as: "recent_courses"
     get "/courses/recommended", to: "courses#recommended_courses", as: "recommended_courses"
     get "/collections/recommended", to: "collections#recommended_collections", as: "recommended_collections"
