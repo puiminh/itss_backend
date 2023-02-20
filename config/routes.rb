@@ -7,9 +7,12 @@ Rails.application.routes.draw do
 
   # Vu Tuan Kiet
   namespace :api do
-    namespace :v1 do
+    namespace :v1,  defaults: {format: :json}  do
+
       #resources :courses, only: [:index, :show, :create, :update, :destroy]
       #resources :collections, only: [:index, :show, :create, :update, :destroy]
+      resource :sessions, only: %i[create destroy] # No plural needed
+      resources :users, only: %i[create]
 
       #course
       #kiet

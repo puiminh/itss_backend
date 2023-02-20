@@ -1,5 +1,7 @@
 # Vu Tuan Kiet
 class Api::V1::CoursesController < ApplicationController
+    before_action :authenticate_user!
+
     def index
         render json: {
             data: Course.all
@@ -80,6 +82,7 @@ class Api::V1::CoursesController < ApplicationController
     end
 
     def recommended_courses
+        byebug
         begin
             recommended_courses = []
             courses = Course.all

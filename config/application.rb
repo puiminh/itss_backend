@@ -12,7 +12,7 @@ module Backend
     config.load_defaults 7.0
 
     # Configuration for the application, engines, and railties goes here.
-    #
+    config.autoload_paths << Rails.root.join('lib')
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
     #
@@ -21,6 +21,9 @@ module Backend
 
     # Only loads a smaller set of middleware suitable for API only apps.
     # Middleware like session, flash, cookies can be added back manually.
+
+    # config.session_store :enable
+
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
   end
