@@ -8,6 +8,17 @@ class Api::V1::UsersController < ApplicationController
         end
     end
 
+    def new_users_last_week
+        render json: User.where(
+            'created_at >= :last_week',
+            :last_week  => Time.now - 7.days
+        ), status: :ok
+    end
+
+    def total
+        render json: {total: User.count}, status: :ok
+    end
+
     private
 
     def user_params

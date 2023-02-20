@@ -87,4 +87,15 @@ class Api::V1::CollectionsController < ApplicationController
             }, status: 500
         end
     end
+
+    def new_collections_last_week
+        render json: Collection.where(
+            'created_at >= :last_week',
+            :last_week  => Time.now - 7.days
+        ), status: :ok
+    end
+
+    def total
+        render json: {total: Collection.count}, status: 200
+    end
 end

@@ -69,4 +69,30 @@ class Api::V1::CollectionsCoursesController < ApplicationController
             }, status: :unprocessable
         end
     end
+
+    def keyword_find
+        type = params[:type]
+        keyword = params[:keyword]
+        if type == "course"
+            data = Course.where("`title` LIKE :title OR `desc` LIKE :desc", :title => "%#{keyword}%", :desc => "#{keyword}").limit(6)
+            render json: {data: data}, status: :ok
+        elsif type == "collection"
+            data = Collection.where("`title` LIKE :title OR `desc` LIKE :desc", :title => "%#{keyword}%", :desc => "#{keyword}").limit(6)
+            render json: {data: data}, status: :ok
+        else
+            render json: {
+                message: "Invalid type"
+            }, status: :unprocessable_entity
+        end
+    end
+
+    def collection_with_courses
+        collection_data = params[:collection]
+        collection = Collection.create(title: collection_data["title"], desc: collection_data["desc"], author_id: collection_data["author_id"])
+        courses_id = params[:courses]
+        courses_id.map do |course_id|
+            CollectionsCourse.create(collection_id: collection.id, course_id: course_id)
+        end
+        render json: {data: collection}, status: :ok
+    end
 end

@@ -53,4 +53,15 @@ class Api::V1::CommentsController < ApplicationController
             }, status: 400      
         end
     end
+
+    def new_comments_last_week
+        render json: Comment.where(
+            'created_at >= :last_week',
+            :last_week  => Time.now - 7.days
+        ), status: :ok
+    end
+
+    def total
+        render json: {total: Comment.count}, status: :ok
+    end
 end

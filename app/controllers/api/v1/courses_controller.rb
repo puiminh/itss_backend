@@ -1,6 +1,6 @@
 # Vu Tuan Kiet
 class Api::V1::CoursesController < ApplicationController
-    before_action :authenticate_user!
+    # before_action :authenticate_user!
 
     def index
         render json: {
@@ -137,5 +137,30 @@ class Api::V1::CoursesController < ApplicationController
                 errors: "Something went wrong"
             }, status: 500
         end
+    end
+
+    def course_with_vocabularies
+        course_data = params["course"]
+        vocabularies = params["vocabs"]
+
+        course = Course.create(title: course_data["title"], desc: course_data["desc"], author_id: course_data["author_id"])
+        vocabs = vocabularies.map do |vocab|
+            Vocabulary.create(word: vocab["word"], define: vocab["define"], link: vocab["link"], kind: vocab["kind"], course_id: course.id)
+        end
+        render json: {
+            course: course,
+            vocabularies: vocabs
+        }, status: 200
+    end
+
+    def new_courses_last_week
+        render json: Course.where(
+            'created_at >= :last_week',
+            :last_week  => Time.now - 7.days
+        ), status: :ok
+    end
+
+    def total
+        render json: {total: Course.count}, status: 200
     end
 end
