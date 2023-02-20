@@ -9,8 +9,6 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1,  defaults: {format: :json}  do
 
-      #resources :courses, only: [:index, :show, :create, :update, :destroy]
-      #resources :collections, only: [:index, :show, :create, :update, :destroy]
       resource :sessions, only: %i[create destroy] # No plural needed
       resources :users, only: %i[create]
 
@@ -27,6 +25,17 @@ Rails.application.routes.draw do
       post "/collections/courses", to: "collections_courses#add_course_to_collection", as: "add_course_to_collection"
 
       post "/progress/update", to: "progresses#update_progress", as: "update_progress"
+
+      resources :courses, only: [:index, :show, :create, :update, :destroy]
+      resources :collections, only: [:index, :show, :create, :update, :destroy]
+      resources :collections_courses, only: [:index, :show, :create, :update, :destroy]
+      resources :progresses, only: [:index, :show, :create, :update, :destroy]
+
+      resources :ratings, only: [:index, :show, :create, :update, :destroy]
+      resources :vocabularies, only: [:index, :show, :create, :update, :destroy]
+      resources :bookmark_collections, only: [:index, :show, :create, :update, :destroy]
+      resources :bookmark_courses, only: [:index, :show, :create, :update, :destroy]
+      resources :comments, only: [:index, :show, :create, :update, :destroy]
     end
   end
 end
