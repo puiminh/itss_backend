@@ -13,8 +13,8 @@ Rails.application.routes.draw do
       resources :users, only: %i[create]
 
       #user
-      get "users/last_week", to: "users#new_users_last_week", as: "new_users_last_week"
-      get "users/total", to: "users#total", as: "users_total"
+      get "/users/last_week", to: "users#new_users_last_week", as: "new_users_last_week"
+      get "/users/total", to: "users#total", as: "users_total"
 
       #course
       get "/courses/recent/:user_id", to: "courses#recent_courses", as: "recent_courses"
@@ -39,6 +39,9 @@ Rails.application.routes.draw do
       #comment
       get "/comments/last_week", to: "comments#new_comments_last_week", as: "new_comments_last_week"
       get "/comments/total", to: "comments#total", as: "comments_total"
+
+      #notice
+      get "/notices/user/:user_id", to: "notices#notices_user", as: "notices_user"
 
       resources :courses, only: [:index, :show, :create, :update, :destroy]
       resources :collections, only: [:index, :show, :create, :update, :destroy]

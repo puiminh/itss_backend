@@ -1,6 +1,6 @@
 # Vu Tuan Kiet
 class Api::V1::CoursesController < ApplicationController
-    # before_action :authenticate_user!
+    before_action :authenticate_user!
 
     def index
         render json: {
