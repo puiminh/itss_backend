@@ -26,6 +26,14 @@ class User < ApplicationRecord
 
   has_many :progresses
   # has_many :vocabularies, through: :progresses
-  # has_many :courses, through: :progresses
+  # has_many :courses, through: :progresses 
 
+  before_create do
+    self.role = 0 if role.blank?
+    self.avatar = 'https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png' if avatar.blank?
+  end
+
+  before_update do
+    self.role = 0 if role.blank?
+  end
 end

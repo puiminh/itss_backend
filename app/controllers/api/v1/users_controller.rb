@@ -1,11 +1,11 @@
 class Api::V1::UsersController < ApplicationController
 
-    wrap_parameters :user, include: [:email, :password, :password_confirmation]
-
     def create
         @user = User.new(user_params)
         if @user.save
-            render :create, status: :created
+            render json: {
+                user: @user
+            }, status: :created
         else
             render json: @user.errors, status: :unprocessable_entity
         end
@@ -20,6 +20,7 @@ class Api::V1::UsersController < ApplicationController
                 role: params[:role]
             )
             render json: {
+                user: @user,
                 message: "success"
             }, status: 200
         else
@@ -59,6 +60,12 @@ class Api::V1::UsersController < ApplicationController
     private
 
     def user_params
-        params.require(:user).permit(:email,:password,:password_confirmation)
+        params.require(:user).permit(
+            :email,
+            :password,
+            :password_confirmation,
+            :first_name,
+            :last_name,
+            )
     end
 end
