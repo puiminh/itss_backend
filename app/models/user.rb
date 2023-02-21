@@ -7,6 +7,9 @@ class User < ApplicationRecord
   has_many :courses, foreign_key: :author_id
   has_many :collections, foreign_key: :author_id
 
+  has_many :notices
+  has_many :notices, foreign_key: :from
+
   # author: linnh
   # association
   has_many :comments
@@ -23,6 +26,14 @@ class User < ApplicationRecord
 
   has_many :progresses
   # has_many :vocabularies, through: :progresses
-  # has_many :courses, through: :progresses
+  # has_many :courses, through: :progresses 
 
+  before_create do
+    self.role = 0 if role.blank?
+    self.avatar = 'https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png' if avatar.blank?
+  end
+
+  before_update do
+    self.role = 0 if role.blank?
+  end
 end

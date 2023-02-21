@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: one
+  from: one
+  action: MyString
+  data: MyString
+  seen: 1
+  message: MyText
+
+two:
+  user_id: two
+  from: two
+  action: MyString
+  data: MyString
+  seen: 1
+  message: MyText

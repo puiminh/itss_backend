@@ -14,7 +14,7 @@ Devise.setup do |config|
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
-  # config.secret_key = '65722d2f94b66bd70adea21a0cd47ae3dc68b136ff103332fb952fdc576d0dccde5224b67ecaf59e9507cd87609c02df7c2d50172bab6e532c486bece96cb550'
+  # config.secret_key = '48216858c26e9312f13d7ea1df9131f31d92aca599ed0eb801204f8766323479b05fd1aac4260ecdf82ae05935c72af716bf5f4bada8ebcbaecda56919033631'
 
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.
@@ -126,7 +126,7 @@ Devise.setup do |config|
   config.stretches = Rails.env.test? ? 1 : 12
 
   # Set up a pepper to generate the hashed password.
-  # config.pepper = 'b25fae952f715a4bbd655bd25d911177272aa8ced8e5165acb7f539cfaff41fcbef0b96bf0406704ef31311d58f25b93735b736d196260207ee193a308e542af'
+  # config.pepper = 'c905c1dafc31bc1a0e4e7a4d249ef946c8176306a90707656268ed481c8e01619c919460942cc841bf1414480fd3c7e8eb8c9cae3b0185c65aa3c3c488e6f080'
 
   # Send a notification to the original email when the user's email is changed.
   # config.send_email_changed_notification = false
@@ -277,10 +277,10 @@ Devise.setup do |config|
   # If you want to use other strategies, that are not supported by Devise, or
   # change the failure app, you can configure them inside the config.warden block.
   #
-  # config.warden do |manager|
-  #   manager.intercept_401 = false
-  #   manager.default_strategies(scope: :user).unshift :some_external_strategy
-  # end
+  config.warden do |manager|
+    manager.strategies.add(:jwt, Devise::Strategies::JWTAuthenticatable)
+    manager.default_strategies(scope: :user).unshift :jwt
+  end
 
   # ==> Mountable engine configurations
   # When using Devise inside an engine, let's call it `MyEngine`, and this engine

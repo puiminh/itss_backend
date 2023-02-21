@@ -10,9 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
-ActiveRecord::Schema[7.0].define(version: 2023_01_24_191012) do
-  create_table "bookmark_collections", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+ActiveRecord::Schema[7.0].define(version: 2023_02_20_051411) do
+  create_table "bookmark_collections", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "collection_id"
     t.datetime "created_at", null: false
@@ -22,7 +21,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_24_191012) do
     t.index ["user_id"], name: "index_bookmark_collections_on_user_id"
   end
 
-  create_table "bookmark_courses", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "bookmark_courses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "course_id"
     t.datetime "created_at", null: false
@@ -32,7 +31,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_24_191012) do
     t.index ["user_id"], name: "index_bookmark_courses_on_user_id"
   end
 
-  create_table "collections", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "collections", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "title"
     t.text "desc"
     t.datetime "created_at", null: false
@@ -42,7 +41,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_24_191012) do
     t.index ["author_id"], name: "index_collections_on_author_id"
   end
 
-  create_table "collections_courses", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "collections_courses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "collection_id"
     t.bigint "course_id"
     t.datetime "created_at", null: false
@@ -52,7 +51,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_24_191012) do
     t.index ["course_id"], name: "index_collections_courses_on_course_id"
   end
 
-  create_table "comments", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "comments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.text "content"
     t.bigint "user_id"
     t.bigint "course_id"
@@ -63,7 +62,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_24_191012) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
-  create_table "courses", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "courses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "title"
     t.text "desc"
     t.datetime "created_at", null: false
@@ -72,7 +71,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_24_191012) do
     t.index ["author_id"], name: "index_courses_on_author_id"
   end
 
-  create_table "progresses", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "notices", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "action"
+    t.string "data"
+    t.integer "seen"
+    t.text "message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.bigint "from"
+    t.index ["from"], name: "fk_rails_113fde3206"
+    t.index ["user_id"], name: "index_notices_on_user_id"
+  end
+
+  create_table "progresses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "point"
     t.bigint "user_id"
     t.bigint "course_id"
@@ -85,7 +97,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_24_191012) do
     t.index ["vocabulary_id"], name: "index_progresses_on_vocabulary_id"
   end
 
-  create_table "ratings", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "ratings", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "star"
     t.bigint "user_id"
     t.bigint "course_id"
@@ -96,7 +108,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_24_191012) do
     t.index ["user_id"], name: "index_ratings_on_user_id"
   end
 
-  create_table "users", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -113,7 +125,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_24_191012) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  create_table "vocabularies", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "vocabularies", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "word"
     t.text "define"
     t.text "link"
@@ -126,5 +138,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_24_191012) do
 
   add_foreign_key "collections", "users", column: "author_id"
   add_foreign_key "courses", "users", column: "author_id"
+  add_foreign_key "notices", "users"
+  add_foreign_key "notices", "users", column: "from"
   add_foreign_key "vocabularies", "courses"
 end
