@@ -7,7 +7,7 @@ class Api::V1::CollectionsCoursesController < ApplicationController
 
     def show
         render json: {
-            collection: CollectionsCourse.find(params[:id])
+            data: CollectionsCourse.find(params[:id])
         }, status: 200
     end
 

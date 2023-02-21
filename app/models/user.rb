@@ -7,6 +7,9 @@ class User < ApplicationRecord
   has_many :courses, foreign_key: :author_id
   has_many :collections, foreign_key: :author_id
 
+  has_many :notices
+  has_many :notices, foreign_key: :from
+
   # author: linnh
   # association
   has_many :comments

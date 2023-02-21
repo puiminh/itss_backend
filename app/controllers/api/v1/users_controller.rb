@@ -19,6 +19,22 @@ class Api::V1::UsersController < ApplicationController
         render json: {total: User.count}, status: :ok
     end
 
+    def created_courses_collections
+        user = User.find(params[:user_id])
+        render json: {
+            collections: user.collections,
+            courses: user.courses
+        }
+    end
+
+    def bookmarked_courses_collections
+        user = User.find(params[:user_id])
+        render json: {
+            bookmark_collections: user.bookmark_collections,
+            bookmark_courses: user.bookmark_courses
+        }
+    end
+
     private
 
     def user_params

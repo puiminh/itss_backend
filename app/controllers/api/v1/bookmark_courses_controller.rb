@@ -7,7 +7,7 @@ class Api::V1::BookmarkCoursesController < ApplicationController
 
     def show
         render json: {
-            collection: BookmarkCourse.find(params[:id])
+            data: BookmarkCourse.find(params[:id])
         }, status: 200
     end
 

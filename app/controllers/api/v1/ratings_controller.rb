@@ -7,7 +7,7 @@ class Api::V1::RatingsController < ApplicationController
 
     def show
         render json: {
-            collection: Rating.find(params[:id])
+            data: Rating.find(params[:id])
         }, status: 200
     end
 
@@ -52,5 +52,13 @@ class Api::V1::RatingsController < ApplicationController
                 message: "failure"
             }, status: 400      
         end
+    end
+
+    def course_rating
+        course = Course.find(params[:course_id])
+        render json: {
+            total_ratings: course.ratings.sum(:star),
+            average_ratings: course.ratings.average(:star)
+        }
     end
 end

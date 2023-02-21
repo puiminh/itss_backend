@@ -7,7 +7,7 @@ class Api::V1::VocabulariesController < ApplicationController
 
     def show
         render json: {
-            collection: Vocabulary.find(params[:id])
+            data: Vocabulary.find(params[:id])
         }, status: 200
     end
 
@@ -54,5 +54,13 @@ class Api::V1::VocabulariesController < ApplicationController
                 message: "failure"
             }, status: 400      
         end
+    end
+
+    def need_learn
+        progresses = Progress.where(user_id: params[:user_id], course_id: params[:course_id]).order(point: :asc).limit(10)
+        data = progresses.map do |progress|
+            progress.vocabulary
+        end
+        render json: data, status: :ok
     end
 end

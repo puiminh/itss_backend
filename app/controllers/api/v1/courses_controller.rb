@@ -1,6 +1,6 @@
 # Vu Tuan Kiet
 class Api::V1::CoursesController < ApplicationController
-    before_action :authenticate_user!
+    # before_action :authenticate_user!
 
     def index
         render json: {
@@ -13,7 +13,8 @@ class Api::V1::CoursesController < ApplicationController
         vocabularies = course.vocabularies
         render json: {
             course: course,
-            vocabularies: vocabularies
+            vocabularies: vocabularies,
+            author: course.author
         }, status: 200
     end
 
@@ -162,5 +163,23 @@ class Api::V1::CoursesController < ApplicationController
 
     def total
         render json: {total: Course.count}, status: 200
+    end
+
+    def update_course_vocabularies
+        course_id = params["course_id"]
+        course_data = params["course"]
+        new_vocabularies = params["vocabs"]
+        course = Course.find(course_id)
+        course.update(title: course_data["title"], desc: course_data["desc"])
+        old_vocabularies = course.vocabularies
+        old_vocabularies.each do |old_vocab|
+            old_vocab.destroy
+        end
+        new_vocabularies.each do |new_vocab|
+            Vocabulary.create(word: new_vocab["word"], define: new_vocab["define"], link: new_vocab["link"], kind: new_vocab["kind"], course_id: course.id)
+        end
+        render json: {
+            message: "Course and vocabularies updated"
+        }, status: 200
     end
 end

@@ -8,7 +8,7 @@ class Api::V1::ProgressesController < ApplicationController
 
     def show
         render json: {
-            collection: Progress.find(params[:id])
+            data: Progress.find(params[:id])
         }, status: 200
     end
 
@@ -89,5 +89,31 @@ class Api::V1::ProgressesController < ApplicationController
                 errors: "Something went wrong"
             }, status: 500
         end
+    end
+
+    def user_progress_course
+        course_id = params[:course_id]
+        user_id = params[:user_id]
+        progresses = Progress.find_by(user_id: user_id, course_id: course_id)
+        count = Course.find(course_id).vocabularies.count
+        count = 0 ? 1 : count
+        render json: {
+            progresses: (progresses.point/count)*10,
+        }, status: 200
+    end
+
+    def user_progress
+        user_id = params[:user_id]
+        progresses = Progress.where("user_id = ?", user_id)
+        data = []
+        progresses.each do |progress|
+            count = progress.course.vocabularies.count
+            count = count == 0 ? 1 : count
+            data << {
+                course_id: progress.course_id,
+                progress: (progress.point/count)*10,
+            }
+        end
+        render json: data, status: 200
     end
 end

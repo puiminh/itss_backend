@@ -6,8 +6,15 @@ class Api::V1::CollectionsController < ApplicationController
     end
 
     def show
+        collection = Collection.find(params[:id])
+        collections_courses = collection.collections_courses
+        courses = collections_courses.map do |collection_course|
+            collection_course.course
+        end
         render json: {
-            collection: Collection.find(params[:id])
+            collection: collection,
+            courses: courses,
+            author: collection.author
         }, status: 200
     end
 
@@ -97,5 +104,18 @@ class Api::V1::CollectionsController < ApplicationController
 
     def total
         render json: {total: Collection.count}, status: 200
+    end
+
+    def update_collection_courses
+        collection_id = params[:collection_id]
+        collection_data = params[:collection]
+        courses_id = params[:courses]
+        collection = Collection.find(collection_id)
+        collection.update(title: collection_data['title'], desc: collection_data['desc'], image: collection_data['image'])
+        CollectionsCourse.where("collection_id = ?", collection_id).destroy_all
+        courses_id.each do |course_id|
+            CollectionsCourse.create(collection_id: collection_id, course_id: course_id)
+        end
+        render json: {message: "Collection and courses updated"}, status: 200
     end
 end

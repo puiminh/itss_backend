@@ -7,7 +7,7 @@ class Api::V1::CommentsController < ApplicationController
 
     def show
         render json: {
-            collection: Comment.find(params[:id])
+            data: Comment.find(params[:id])
         }, status: 200
     end
 
@@ -63,5 +63,21 @@ class Api::V1::CommentsController < ApplicationController
 
     def total
         render json: {total: Comment.count}, status: :ok
+    end
+
+    def comments_course
+        course = Course.find(params[:course_id])
+        data = []
+        comments = course.comments
+        comments.each do |comment|
+            data << {
+                comment: comment,
+                user: comment.user
+            }
+        end
+        render json: {
+            comments: data,
+            total: comments.count
+        }, status: 200
     end
 end
