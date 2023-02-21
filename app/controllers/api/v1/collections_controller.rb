@@ -23,7 +23,7 @@ class Api::V1::CollectionsController < ApplicationController
             title: params[:title],
             desc: params[:desc],
             image: params[:image],
-            author: params[:author],
+            author_id: params[:author_id],
         })
         if collection.save
             render json: {
