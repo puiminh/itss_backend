@@ -22,7 +22,7 @@ class Api::V1::CoursesController < ApplicationController
         course = Course.new({
             title: params[:title],
             desc: params[:desc],
-            author: params[:author],
+            author_id: params[:author],
         })
         if course.save
             render json: {

@@ -5,7 +5,6 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
 
-  # Vu Tuan Kiet
   namespace :api do
     namespace :v1,  defaults: {format: :json}  do
 
@@ -17,6 +16,7 @@ Rails.application.routes.draw do
       get "/users/total", to: "users#total", as: "users_total"
       get "/users/created/courses_collections/:user_id", to: "users#created_courses_collections", as: "created_courses_collections"
       get "/users/bookmarked/courses_collections/:user_id", to: "users#bookmarked_courses_collections", as: "bookmarked_courses_collections"
+      put "/users/:user_id", to: "users#update"
 
       #course
       get "/courses/recent/:user_id", to: "courses#recent_courses", as: "recent_courses"

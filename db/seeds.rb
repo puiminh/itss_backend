@@ -10,7 +10,6 @@
 (1..50).each do |id|
     User.create!(
         # each user is assigned an id from 1-20
-        id: id, 
         first_name: Faker::Name.first_name ,
         last_name: Faker::Name.last_name,
         avatar: Faker::Avatar.image,
@@ -29,7 +28,6 @@ end
 (1..40).each do |id|
     Course.create!(
         # each user is assigned an id from 1-20
-        id: id, 
         title: Faker::Book.title,
         desc: Faker::Lorem.paragraph,
         author: User.find(Faker::Number.within(range: 1..20))  
@@ -40,7 +38,6 @@ end
 (1..10).each do |id|
     Vocabulary.create!(
         # each user is assigned an id from 1-20
-        id: id, 
         word: Faker::Kpop.girl_groups,
         define: Faker::Lorem.paragraph,
         link: Faker::Internet.url,
@@ -53,7 +50,6 @@ end
 (1..20).each do |id|
     Comment.create!(
         # each user is assigned an id from 1-20
-        id: id, 
         content: Faker::Lorem.sentence,
         course: Course.find(Faker::Number.within(range: 1..40)),
         user: User.find(Faker::Number.within(range: 1..50))
@@ -64,7 +60,6 @@ end
 (1..15).each do |id|
     Rating.create!(
         # each user is assigned an id from 1-20
-        id: id, 
         star: Faker::Number.within(range: 1..5),
         course: Course.find(Faker::Number.within(range: 1..40)),
         user: User.find(Faker::Number.within(range: 1..50))
@@ -76,7 +71,6 @@ end
 (1..15).each do |id|
     Progress.create!(
         # each user is assigned an id from 1-20
-        id: id, 
         point: Faker::Number.within(range: 1..1000),
         course: Course.find(Faker::Number.within(range: 1..40)),
         user: User.find(Faker::Number.within(range: 1..50)),
@@ -90,7 +84,6 @@ end
 (1..10).each do |id|
     Collection.create!(
         # each user is assigned an id from 1-20
-        id: id, 
         title: Faker::Educator.course_name,
         desc: Faker::Lorem.paragraph,
         image: Faker::LoremFlickr.image,
@@ -102,7 +95,6 @@ end
 (1..15).each do |id|
     CollectionsCourse.create!(
         # each user is assigned an id from 1-20
-        id: id, 
         course: Course.find(Faker::Number.within(range: 1..20)),
         collection: Collection.find(Faker::Number.within(range: 1..10))
     )
@@ -112,7 +104,6 @@ end
 (1..15).each do |id|
     BookmarkCourse.create!(
         # each user is assigned an id from 1-20
-        id: id, 
         course: Course.find(Faker::Number.within(range: 1..10)),
         user: User.find(Faker::Number.within(range: 1..10))
     )
@@ -122,7 +113,6 @@ end
 (1..15).each do |id|
     BookmarkCollection.create!(
         # each user is assigned an id from 1-20
-        id: id, 
         collection: Collection.find(Faker::Number.within(range: 1..10)),
         user: User.find(Faker::Number.within(range: 1..50))
     )
