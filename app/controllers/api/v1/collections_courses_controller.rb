@@ -73,12 +73,29 @@ class Api::V1::CollectionsCoursesController < ApplicationController
     def keyword_find
         type = params[:type]
         keyword = params[:keyword]
+        data_search = []
         if type == "course"
             data = Course.where("`title` LIKE :title OR `desc` LIKE :desc", :title => "%#{keyword}%", :desc => "#{keyword}").limit(6)
-            render json: {data: data}, status: :ok
+            data.each do |dat|
+                author = dat.author
+                data_search << {
+                    course: dat,
+                    author: author,
+                    contain: dat.vocabularies.count
+                }
+            end
+            render json: {data: data_search}, status: :ok
         elsif type == "collection"
             data = Collection.where("`title` LIKE :title OR `desc` LIKE :desc", :title => "%#{keyword}%", :desc => "#{keyword}").limit(6)
-            render json: {data: data}, status: :ok
+            data.each do |dat|
+                author = dat.author
+                data_search << {
+                    collection: dat,
+                    author: author,
+                    contain: dat.collections_courses.count
+                }
+            end
+            render json: {data: data_search}, status: :ok
         else
             render json: {
                 message: "Invalid type"
@@ -88,7 +105,7 @@ class Api::V1::CollectionsCoursesController < ApplicationController
 
     def collection_with_courses
         collection_data = params[:collection]
-        collection = Collection.create(title: collection_data["title"], desc: collection_data["desc"], author_id: collection_data["author_id"])
+        collection = Collection.create(title: collection_data["title"], desc: collection_data["desc"], author_id: collection_data["author_id"], image: collection_data["image"])
         courses_id = params[:courses]
         courses_id.map do |course_id|
             CollectionsCourse.create(collection_id: collection.id, course_id: course_id)
