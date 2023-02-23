@@ -94,24 +94,33 @@ class Api::V1::ProgressesController < ApplicationController
     def user_progress_course
         course_id = params[:course_id]
         user_id = params[:user_id]
-        progresses = Progress.find_by(user_id: user_id, course_id: course_id)
+        progresses = Progress.where(["user_id = ? and course_id = ?", user_id, course_id])
         count = Course.find(course_id).vocabularies.count
-        count = 0 ? 1 : count
+        count == 0 ? 1 : count
+
+        # puts progresses.sum(:point)
+        # puts count
+        totalProgress = (progresses.sum(:point).to_f/ (count*10))
+        # puts totalProgress
+
         render json: {
-            progresses: (progresses.point/count)*10,
+            progresses: totalProgress.round(2),
         }, status: 200
     end
 
     def user_progress
         user_id = params[:user_id]
-        progresses = Progress.where("user_id = ?", user_id)
+        progresses = Progress.select("course_id","SUM(point) as total").where("user_id = ?", user_id).group("course_id").order(total: :desc)
         data = []
         progresses.each do |progress|
-            count = progress.course.vocabularies.count
-            count = count == 0 ? 1 : count
+            # count = progress.course.vocabularies.count
+            # course = progress.course
+            # count = count == 0 ? 1 : count
+            course = Course.find(progress.course_id)
+            count = course.vocabularies.count
             data << {
-                course_id: progress.course_id,
-                progress: (progress.point/count)*10,
+                course: course,
+                progress: progress.total.to_f / (count * 10),
             }
         end
         render json: data, status: 200

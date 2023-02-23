@@ -13,6 +13,7 @@ class Api::V1::CollectionsController < ApplicationController
         end
         render json: {
             collection: collection,
+            contain: collections_courses.count,
             courses: courses,
             author: collection.author
         }, status: 200
@@ -78,6 +79,7 @@ class Api::V1::CollectionsController < ApplicationController
 
                 recommended_collections << {
                     collection: collection,
+                    contain: collection.collections_courses.count,
                     author: collection.author,
                     bookmark_collections: bookmark_collections_newest.count,
                     bookmark_users: users
@@ -86,7 +88,7 @@ class Api::V1::CollectionsController < ApplicationController
 
             recommended_collections = recommended_collections.sort { |a, b| b[:bookmark_collections] <=> a[:bookmark_collections] }
             render json: {
-                data: recommended_collections
+                data: recommended_collections.slice(0,4)
             }, status: 200
         rescue
             render json: {

@@ -10,11 +10,12 @@ class Api::V1::CoursesController < ApplicationController
 
     def show
         course = Course.find(params[:id])
+        author = User.find(course.author_id)
         vocabularies = course.vocabularies
         render json: {
             course: course,
             vocabularies: vocabularies,
-            author: course.author
+            author: author
         }, status: 200
     end
 
@@ -64,14 +65,17 @@ class Api::V1::CoursesController < ApplicationController
     def recent_courses
         begin
             course_list = []
-            progresses = User.find_by(id: params[:user_id]).progresses.group(:course_id).order(updated_at: :desc).limit(8)
+            progresses = Progress.select(:course_id, "max(updated_at) as maxupdate").where(user_id: params[:user_id]).group(:course_id).order(maxupdate: :desc).limit(6)
             progresses.each do |progress|
+                course = progress.course
+                author = course.author
                 course_list << {
-                    course: progress.course,
+                    course: course,
+                    contain: course.vocabularies.count,
+                    author: author,
                     progress: progress
                 }
             end
-
             render json: {
                 data: course_list,
             }, status: 200
@@ -83,13 +87,13 @@ class Api::V1::CoursesController < ApplicationController
     end
 
     def recommended_courses
-        byebug
         begin
             recommended_courses = []
             courses = Course.all
             courses.each do |course|
                 recommended_courses << {
                     course: course,
+                    contain: course.vocabularies.count,
                     author: course.author,
                     rating: {
                         sum: course.ratings.sum(:star),
@@ -100,7 +104,7 @@ class Api::V1::CoursesController < ApplicationController
             end
             recommended_courses = recommended_courses.sort { |a, b| [b[:rating][:sum], b[:rating][:avg], b[:bookmark_courses]] <=> [a[:rating][:sum], a[:rating][:avg], a[:bookmark_courses]] }
             render json: {
-                data: recommended_courses
+                data: recommended_courses.slice(0, 6)
             }, status: 200
         rescue
             render json: {

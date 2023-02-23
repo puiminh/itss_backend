@@ -24,7 +24,7 @@
 end
 
 
-# Course
+# # Course
 (1..40).each do |id|
     Course.create!(
         # each user is assigned an id from 1-20
@@ -35,18 +35,18 @@ end
 end
 
 # Vocabulary
-(1..10).each do |id|
+(1..500).each do |id|
     Vocabulary.create!(
         # each user is assigned an id from 1-20
-        word: Faker::Kpop.girl_groups,
+        word: Faker::Verb.base,
         define: Faker::Lorem.paragraph,
-        link: Faker::Internet.url,
-        kind: Faker::Number.within(range: 0..5),
-        course: Course.find(Faker::Number.within(range: 1..10))
+        link: Faker::LoremFlickr.image,
+        kind: 1,
+        course: Course.find(Faker::Number.within(range: 1..40))
     )
 end
 
-# Comment
+# # Comment
 (1..20).each do |id|
     Comment.create!(
         # each user is assigned an id from 1-20
@@ -56,7 +56,7 @@ end
     )
 end
 
-# Rating
+# # Rating
 (1..15).each do |id|
     Rating.create!(
         # each user is assigned an id from 1-20
@@ -68,19 +68,19 @@ end
 
 
 #  Progress
-(1..15).each do |id|
+(1..500).each do |id|
     Progress.create!(
         # each user is assigned an id from 1-20
-        point: Faker::Number.within(range: 1..1000),
+        point: Faker::Number.within(range: 1..10),
         course: Course.find(Faker::Number.within(range: 1..40)),
-        user: User.find(Faker::Number.within(range: 1..50)),
-        vocabulary: Vocabulary.find(Faker::Number.within(range: 1..10))
+        user: User.find(Faker::Number.within(range: 1..20)),
+        vocabulary: Vocabulary.find(Faker::Number.within(range: 1..500))
     )
 end
 
 
 
-#  Collection
+# #  Collection
 (1..10).each do |id|
     Collection.create!(
         # each user is assigned an id from 1-20
@@ -91,7 +91,7 @@ end
     )
 end
 
-#  Collections course
+# #  Collections course
 (1..15).each do |id|
     CollectionsCourse.create!(
         # each user is assigned an id from 1-20
@@ -100,7 +100,7 @@ end
     )
 end
 
-#  Bookmark Course
+# #  Bookmark Course
 (1..15).each do |id|
     BookmarkCourse.create!(
         # each user is assigned an id from 1-20
@@ -109,7 +109,7 @@ end
     )
 end
 
-#  Bookmark Collection
+# #  Bookmark Collection
 (1..15).each do |id|
     BookmarkCollection.create!(
         # each user is assigned an id from 1-20
