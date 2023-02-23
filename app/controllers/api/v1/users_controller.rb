@@ -43,17 +43,52 @@ class Api::V1::UsersController < ApplicationController
 
     def created_courses_collections
         user = User.find(params[:user_id])
+        collection_list = []
+        course_list = []
+        collections = user.collections
+        courses = user.courses
+
+        collections.each do |collection|
+            collection_list << {
+                collection: collection,
+                contain: collection.collections_courses.count
+            }
+        end
+        courses.each do |course|
+            course_list << {
+                course: course,
+                contain: course.vocabularies.count
+            }
+        end
         render json: {
-            collections: user.collections,
-            courses: user.courses
+            collections: collection_list,
+            courses: course_list
         }
     end
 
     def bookmarked_courses_collections
         user = User.find(params[:user_id])
+        bookmark_collections = []
+        bookmark_courses = []
+        bookmarkCollectionData = user.bookmark_collections
+        bookmarkCourseData =  user.bookmark_courses
+
+        bookmarkCollectionData.each do |bookmark|
+            bookmark_collections << {
+                bookmark: bookmark,
+                collection: Collection.find(bookmark[:collection_id])
+            }
+        end
+
+        bookmarkCourseData.each do |bookmark|
+            bookmark_courses << {
+                bookmark: bookmark,
+                course: Course.find(bookmark[:course_id])
+            }
+        end
         render json: {
-            bookmark_collections: user.bookmark_collections,
-            bookmark_courses: user.bookmark_courses
+            bookmark_collections: bookmark_collections,
+            bookmark_courses: bookmark_courses
         }
     end
 
