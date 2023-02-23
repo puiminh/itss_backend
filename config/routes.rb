@@ -23,6 +23,7 @@ Rails.application.routes.draw do
       get "/courses/recommended", to: "courses#recommended_courses", as: "recommended_courses"
       get "/courses/last_week", to: "courses#new_courses_last_week", as: "new_courses_last_week"
       get "/courses/total", to: "courses#total", as: "courses_total"
+      get "/courses/:course_id/random_list_word", to: "courses#random_list_word", as: "random_list_word"
       post "/courses/duplicate/:user_id", to: "courses#duplicate_course", as: "duplicate_course"
       post "/courses/vocabularies", to: "courses#course_with_vocabularies", as: "course_with_vocabularies"
       put "/courses/vocabularies/:course_id", to: "courses#update_course_vocabularies", as: "update_course_vocabularies"
@@ -57,6 +58,8 @@ Rails.application.routes.draw do
       #vocabulary
       get "/vocabularies/need/:user_id/:course_id", to: "vocabularies#need_learn", as: "need_learn"
 
+      
+      resources :users, only: [:index, :show, :create, :update, :destroy]
       resources :courses, only: [:index, :show, :create, :update, :destroy]
       resources :collections, only: [:index, :show, :create, :update, :destroy]
       resources :collections_courses, only: [:index, :show, :create, :update, :destroy]

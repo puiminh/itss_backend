@@ -15,7 +15,7 @@ class Api::V1::CoursesController < ApplicationController
         render json: {
             course: course,
             vocabularies: vocabularies,
-            author: author
+            author: author,
         }, status: 200
     end
 
@@ -185,5 +185,14 @@ class Api::V1::CoursesController < ApplicationController
         render json: {
             message: "Course and vocabularies updated"
         }, status: 200
+    end
+
+    def random_list_word
+        course_id = params["course_id"]
+        course = Course.find(course_id)
+        vocabularies = course.vocabularies.order("RAND()").limit(10)
+        render json: {
+            vocabularies: vocabularies
+        }
     end
 end

@@ -11,20 +11,38 @@ class Api::V1::RatingsController < ApplicationController
         }, status: 200
     end
 
+    #Ho tro update khi da trung
     def create
-        rating = Rating.new({
-            star: params[:star],
-            user_id: params[:user_id],
-            course_id: params[:course_id]
-        })
-        if rating.save
-            render json: {
-                message: "success"
-            }, status: 201
+        star = params[:star];
+        user_id = params[:user_id];
+        course_id = params[:course_id];
+
+        rated = Rating.find_by(["user_id = ? and course_id = ?", user_id, course_id])
+        if rated
+            if rated.update(star: star, user_id: user_id, course_id: course_id) 
+                render json: {
+                    message: "success"
+                }, status: 200
+            else
+                render json: {
+                    message: "error"
+                }, status: 400
+            end
         else
-            render json: {
-                message: "error"
-            }, status: 400
+            rating = Rating.new({
+                star: params[:star],
+                user_id: params[:user_id],
+                course_id: params[:course_id]
+            })
+            if rating.save
+                render json: {
+                    message: "success"
+                }, status: 201
+            else
+                render json: {
+                    message: "error"
+                }, status: 400
+            end
         end
     end
 
@@ -57,7 +75,7 @@ class Api::V1::RatingsController < ApplicationController
     def course_rating
         course = Course.find(params[:course_id])
         render json: {
-            total_ratings: course.ratings.sum(:star),
+            total_ratings: course.ratings.count(:star),
             average_ratings: course.ratings.average(:star)
         }
     end

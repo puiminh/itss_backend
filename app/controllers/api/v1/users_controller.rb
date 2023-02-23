@@ -11,6 +11,12 @@ class Api::V1::UsersController < ApplicationController
         end
     end
 
+    def index
+        render json: {
+            data: User.all
+        }, status: 200
+    end
+
     def update
         @user = User.find(params[:user_id])
         if @user.update(

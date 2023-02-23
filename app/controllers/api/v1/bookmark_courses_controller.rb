@@ -11,20 +11,39 @@ class Api::V1::BookmarkCoursesController < ApplicationController
         }, status: 200
     end
 
+    # Support bookmark and remove bookmark
     def create
-        bookmark_course = BookmarkCourse.new({
-            user_id: params[:user_id],
-            course_id: params[:course_id]
-        })
-        if bookmark_course.save
-            render json: {
-                message: "success"
-            }, status: 201
+        user_id = params[:user_id]
+        course_id = params[:course_id]
+        bookmark_course = BookmarkCourse.find_by(["user_id = ? and course_id = ?", user_id, course_id])
+        if (bookmark_course)
+            if bookmark_course.destroy
+                render json: {
+                    message: "delete success"
+                }, status: 200      
+            else
+                render json: {
+                    message: "failure"
+                }, status: 400      
+            end     
         else
-            render json: {
-                message: "error"
-            }, status: 400
+            bookmark_course = BookmarkCourse.new({
+                user_id: params[:user_id],
+                course_id: params[:course_id]
+            })
+    
+            if bookmark_course.save
+                render json: {
+                    bookmark: bookmark_course,
+                    message: "create success"
+                }, status: 201
+            else
+                render json: {
+                    message: "error"
+                }, status: 400
+            end
         end
+
     end
 
     def update
