@@ -11,6 +11,12 @@ class Api::V1::CollectionsController < ApplicationController
         courses = collections_courses.map do |collection_course|
             collection_course.course
         end
+        courses = courses.map do |course|
+            {
+                course: course,
+                total_vocabularies: course.vocabularies.count,
+            }
+        end
         render json: {
             collection: collection,
             contain: collections_courses.count,
