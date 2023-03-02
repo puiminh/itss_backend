@@ -1,4 +1,3 @@
-# Vu Tuan Kiet
 class Api::V1::CoursesController < ApplicationController
     # before_action :authenticate_user!
 
