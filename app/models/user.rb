@@ -4,27 +4,27 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  has_many :courses, foreign_key: :author_id
-  has_many :collections, foreign_key: :author_id
+  has_many :courses, foreign_key: :author_id, :dependent => :delete_all
+  has_many :collections, foreign_key: :author_id, :dependent => :delete_all
 
-  has_many :notices
-  has_many :notices, foreign_key: :from
+  has_many :notices, :dependent => :delete_all
+  has_many :notices, foreign_key: :from, :dependent => :delete_all
 
   # author: linnh
   # association
-  has_many :comments
+  has_many :comments, :dependent => :delete_all
   # has_many :courses, through: :comments
 
-  has_many :ratings
+  has_many :ratings, :dependent => :delete_all
   # has_many :courses, through: :rating
   
-  has_many :bookmark_collections
+  has_many :bookmark_collections, :dependent => :delete_all
   # has_many :collections, through: :bookmark_collections
 
-  has_many :bookmark_courses
+  has_many :bookmark_courses, :dependent => :delete_all
   # has_many :courses, through: :bookmark_courses
 
-  has_many :progresses
+  has_many :progresses, :dependent => :delete_all
   # has_many :vocabularies, through: :progresses
   # has_many :courses, through: :progresses 
 
