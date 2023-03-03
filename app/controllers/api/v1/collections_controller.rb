@@ -69,6 +69,14 @@ class Api::V1::CollectionsController < ApplicationController
         end
     end
 
+    def created_collections
+        user = User.find(params[:user_id])
+        collections = user.collections
+        render json: {
+            data: collections
+        }
+    end
+
     def recommended_collections
         begin
             recommended_collections = []

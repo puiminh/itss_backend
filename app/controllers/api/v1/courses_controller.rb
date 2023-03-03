@@ -61,6 +61,14 @@ class Api::V1::CoursesController < ApplicationController
         end
     end
 
+    def created_courses
+        user = User.find(params[:user_id])
+        courses = user.courses
+        render json: {
+            data: courses
+        }
+    end
+
     def recent_courses
         begin
             course_list = []
