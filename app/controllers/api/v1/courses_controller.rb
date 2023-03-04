@@ -1,6 +1,5 @@
 class Api::V1::CoursesController < ApplicationController
     # before_action :authenticate_user!
-
     def index
         render json: {
             data: Course.all
@@ -49,8 +48,9 @@ class Api::V1::CoursesController < ApplicationController
     end
 
     def destroy
-        course = Course.find(params[:id])
-        if course.destroy
+        @deleted_course = Course.find(params[:course_id])
+        if @deleted_course.destroy
+            notify_delete
             render json: {
                 message: "success"
             }, status: 200      
@@ -201,5 +201,17 @@ class Api::V1::CoursesController < ApplicationController
         render json: {
             vocabularies: vocabularies
         }
+    end
+
+
+    private
+
+    def notify_delete
+        msg = "The admin has deleted your course: #{@deleted_course.title}"
+        save_notice(@deleted_course.author.id, by_user.id, msg)
+    end
+
+    def by_user
+        User.find(params[:by_user_id])
     end
 end

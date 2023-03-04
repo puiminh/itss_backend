@@ -3,7 +3,7 @@ class CreateNotices < ActiveRecord::Migration[7.0]
     create_table :notices do |t|
       t.string :action
       t.string :data
-      t.integer :seen
+      t.integer :seen, default: -1
       t.text :message
 
       t.timestamps

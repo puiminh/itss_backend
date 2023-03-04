@@ -7,7 +7,7 @@
 #   Character.create(name: "Luke", movie: movies.first)
 
 # generate 20 users
-(1..50).each do |id|
+(1..100).each do |id|
     User.create!(
         # each user is assigned an id from 1-20
         first_name: Faker::Name.first_name ,
@@ -52,7 +52,7 @@ end
         # each user is assigned an id from 1-20
         content: Faker::Lorem.sentence,
         course: Course.find(Faker::Number.within(range: 1..40)),
-        user: User.find(Faker::Number.within(range: 1..50))
+        user: User.find(Faker::Number.within(range: 1..100))
     )
 end
 
@@ -62,7 +62,7 @@ end
         # each user is assigned an id from 1-20
         star: Faker::Number.within(range: 1..5),
         course: Course.find(Faker::Number.within(range: 1..40)),
-        user: User.find(Faker::Number.within(range: 1..50))
+        user: User.find(Faker::Number.within(range: 1..100))
     )
 end
 
@@ -73,7 +73,7 @@ end
         # each user is assigned an id from 1-20
         point: Faker::Number.within(range: 1..10),
         course: Course.find(Faker::Number.within(range: 1..40)),
-        user: User.find(Faker::Number.within(range: 1..20)),
+        user: User.find(Faker::Number.within(range: 1..100)),
         vocabulary: Vocabulary.find(Faker::Number.within(range: 1..500))
     )
 end
@@ -95,7 +95,7 @@ end
 (1..15).each do |id|
     CollectionsCourse.create!(
         # each user is assigned an id from 1-20
-        course: Course.find(Faker::Number.within(range: 1..20)),
+        course: Course.find(Faker::Number.within(range: 1..40)),
         collection: Collection.find(Faker::Number.within(range: 1..10))
     )
 end
@@ -104,7 +104,7 @@ end
 (1..15).each do |id|
     BookmarkCourse.create!(
         # each user is assigned an id from 1-20
-        course: Course.find(Faker::Number.within(range: 1..10)),
+        course: Course.find(Faker::Number.within(range: 1..40)),
         user: User.find(Faker::Number.within(range: 1..10))
     )
 end
@@ -117,3 +117,10 @@ end
         user: User.find(Faker::Number.within(range: 1..50))
     )
 end
+
+#Notice
+Notice.create!(
+    message: "this is message for testing",
+    user_id: 1,
+    from: 2
+)
