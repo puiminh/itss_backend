@@ -49,7 +49,6 @@ end
 # # Comment
 (1..20).each do |id|
     Comment.create!(
-        # each user is assigned an id from 1-20
         content: Faker::Lorem.sentence,
         course: Course.find(Faker::Number.within(range: 1..40)),
         user: User.find(Faker::Number.within(range: 1..100))
