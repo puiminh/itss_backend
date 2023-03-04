@@ -154,6 +154,38 @@ paths:
       responses:
         '200':
           description: Get all notices
+  "/api/v1/ratings":
+    get:
+      summary: Get all ratings
+      tags:
+      - Ratings
+      responses:
+        '200':
+          description: Get all ratings
+    post:
+      summary: Rating course
+      tags:
+      - Ratings
+      parameters: []
+      responses:
+        '201':
+          description: Rated course
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                star:
+                  type: integer
+                user_id:
+                  type: integer
+                course_id:
+                  type: integer
+              required:
+              - star
+              - user_id
+              - course_id
   "/api/v1/users":
     get:
       summary: Get all user

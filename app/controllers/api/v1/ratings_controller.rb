@@ -16,16 +16,17 @@ class Api::V1::RatingsController < ApplicationController
         star = params[:star];
         user_id = params[:user_id];
         course_id = params[:course_id];
-
+        
         rated = Rating.find_by(["user_id = ? and course_id = ?", user_id, course_id])
         if rated
             if rated.update(star: star, user_id: user_id, course_id: course_id) 
+                notify_rerate
                 render json: {
-                    message: "success"
+                    message: "re-rated successfully"
                 }, status: 200
             else
                 render json: {
-                    message: "error"
+                    error: rating.errors 
                 }, status: 400
             end
         else
@@ -34,13 +35,15 @@ class Api::V1::RatingsController < ApplicationController
                 user_id: params[:user_id],
                 course_id: params[:course_id]
             })
+            
             if rating.save
+                notify_rated
                 render json: {
                     message: "success"
                 }, status: 201
             else
                 render json: {
-                    message: "error"
+                    error: rating.errors 
                 }, status: 400
             end
         end
@@ -78,5 +81,20 @@ class Api::V1::RatingsController < ApplicationController
             total_ratings: course.ratings.count(:star),
             average_ratings: course.ratings.average(:star)
         }
+    end
+
+    private
+    def notify_rated
+        user = User.find(params[:user_id])
+        course = Course.find(params[:course_id]) 
+        msg = "#{user.first_name} #{user.last_name} rated your course #{course.title}"
+        save_notice(course.author.id, user.id, msg)
+    end
+
+    def notify_rerate
+        user = User.find(params[:user_id])
+        course = Course.find(params[:course_id]) 
+        msg = "#{user.first_name} #{user.last_name} re-rated your course #{course.title}"
+        save_notice(course.author.id, user.id, msg)
     end
 end
