@@ -23,7 +23,7 @@ class Api::V1::CommentsController < ApplicationController
             }, status: 201
         else
             render json: {
-                message: "error"
+                message: comment.errors
             }, status: 400
         end
     end

@@ -7,7 +7,7 @@ RSpec.describe 'Users API', type: :request do
   path '/api/v1/users' do
 
     get 'Get all user' do
-      tags 'user'
+      tags 'User'
       produces 'application/json'
 
       response '200', 'Get all user' do

@@ -4,6 +4,75 @@ info:
   title: API V1
   version: v1
 paths:
+  "/api/v1/comments":
+    get:
+      summary: Get all comments
+      tags:
+      - Comments
+      responses:
+        '200':
+          description: Get all comments
+    post:
+      summary: Create new comment
+      tags:
+      - Comments
+      parameters: []
+      responses:
+        '201':
+          description: Create new comment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+                user_id:
+                  type: integer
+                course_id:
+                  type: integer
+              required:
+              - user_id
+              - content
+              - course_id
+            examples:
+              example:
+                summary: Request example description
+                value:
+                  content: Foo
+                  user_id: 1
+                  course_id: 2
+  "/api/v1/comments/course/{course_id}":
+    get:
+      summary: Get all course comments
+      tags:
+      - Comments
+      parameters:
+      - name: course_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get all course comments
+  "/api/v1/comments/last_week":
+    get:
+      summary: Get new user information for the week
+      tags:
+      - Comments
+      responses:
+        '200':
+          description: Get new user information for the week
+  "/api/v1/comments/total":
+    get:
+      summary: Total comments
+      tags:
+      - Comments
+      responses:
+        '200':
+          description: Total comments
   "/api/v1/courses":
     get:
       summary: Get all courses
@@ -43,7 +112,7 @@ paths:
     get:
       summary: Get all user
       tags:
-      - user
+      - User
       responses:
         '200':
           description: Get all user
