@@ -43,6 +43,7 @@ Rails.application.routes.draw do
       put "/collections/courses/:collection_id", to: "collections#update_collection_courses", as: "update_collection_courses"
       post "/collections/course", to: "collections_courses#add_course_to_collection", as: "add_course_to_collection"
       post "/collections/courses", to: "collections_courses#collection_with_courses", as: "collection_with_courses"
+      delete "/collections/:collection_id/:by_user_id", to: "collections#destroy"
 
       #progress
       get "/progress/:course_id/:user_id", to: "progresses#user_progress_course", as: "user_progress_course"
@@ -56,6 +57,7 @@ Rails.application.routes.draw do
       get "/comments/last_week", to: "comments#new_comments_last_week", as: "new_comments_last_week"
       get "/comments/total", to: "comments#total", as: "comments_total"
       get "/comments/course/:course_id", to: "comments#comments_course", as: "comments_course"
+      delete "/comments/:comment_id/:by_user_id", to: "comments#destroy"
 
       #notice
       get "/notices/user/:user_id", to: "notices#notices_user", as: "notices_user"
@@ -70,7 +72,7 @@ Rails.application.routes.draw do
       
       resources :users, only: [:index, :show, :create, :update, :destroy]
       resources :courses, only: [:index, :show, :create, :update]
-      resources :collections, only: [:index, :show, :create, :update, :destroy]
+      resources :collections, only: [:index, :show, :create, :update]
       resources :collections_courses, only: [:index, :show, :create, :update, :destroy]
       resources :progresses, only: [:index, :show, :create, :update, :destroy]
 
@@ -78,7 +80,7 @@ Rails.application.routes.draw do
       resources :vocabularies, only: [:index, :show, :create, :update, :destroy]
       resources :bookmark_collections, only: [:index, :show, :create, :update, :destroy]
       resources :bookmark_courses, only: [:index, :show, :create, :update, :destroy]
-      resources :comments, only: [:index, :show, :create, :update, :destroy]
+      resources :comments, only: [:index, :show, :create, :update]
 
       resources :notices, only: [:index]
     end

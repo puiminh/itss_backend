@@ -31,9 +31,12 @@ RSpec.describe 'Comment API', type: :request do
                     comment.user  = create :user
                   end
                 }
+                let!(:count_noti) {Notice.count}
                 run_test! do |res|
                     
                     expect(response).to have_http_status(201)
+
+                    expect(Notice.count).to eq(count_noti+1)
                 end
             end
         end
@@ -70,6 +73,24 @@ RSpec.describe 'Comment API', type: :request do
 
             response '200', 'Total comments' do
                 run_test!
+            end
+        end
+    end
+
+    path '/api/v1/comments/{comment_id}/{by_user_id}' do
+
+        delete 'Delete a comment' do
+            tags 'Comments'
+            produces 'application/json'
+            parameter name: :comment_id, in: :path, type: :string
+            parameter name: :by_user_id, in: :path, type: :string
+            response '200', 'Deleted comment' do
+                let(:comment_id) {create(:comment).id}
+                let(:by_user_id) {create(:user).id}
+                run_test! do |res|
+                    expect(response).to have_http_status(200)
+                    expect(Notice.count).to eq(1)
+                end
             end
         end
     end
