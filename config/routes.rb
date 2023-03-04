@@ -59,6 +59,7 @@ Rails.application.routes.draw do
 
       #notice
       get "/notices/user/:user_id", to: "notices#notices_user", as: "notices_user"
+      put "/notices/user/:user_id", to: "notices#user_seen_all", as: "notice_user"
 
       #rating
       get "/ratings/course/:course_id", to: "ratings#course_rating", as: "course_rating"
