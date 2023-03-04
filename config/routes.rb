@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  mount Rswag::Ui::Engine => '/api-docs'
+  mount Rswag::Api::Engine => '/api-docs'
   devise_for :users
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -28,6 +30,10 @@ Rails.application.routes.draw do
       post "/courses/duplicate/:user_id", to: "courses#duplicate_course", as: "duplicate_course"
       post "/courses/vocabularies", to: "courses#course_with_vocabularies", as: "course_with_vocabularies"
       put "/courses/vocabularies/:course_id", to: "courses#update_course_vocabularies", as: "update_course_vocabularies"
+
+      delete "/courses/:course_id/:by_user_id", to:
+      "courses#destroy"
+
 
       #collection
       get "/collections/recommended", to: "collections#recommended_collections", as: "recommended_collections"
@@ -62,7 +68,7 @@ Rails.application.routes.draw do
 
       
       resources :users, only: [:index, :show, :create, :update, :destroy]
-      resources :courses, only: [:index, :show, :create, :update, :destroy]
+      resources :courses, only: [:index, :show, :create, :update]
       resources :collections, only: [:index, :show, :create, :update, :destroy]
       resources :collections_courses, only: [:index, :show, :create, :update, :destroy]
       resources :progresses, only: [:index, :show, :create, :update, :destroy]
@@ -72,6 +78,8 @@ Rails.application.routes.draw do
       resources :bookmark_collections, only: [:index, :show, :create, :update, :destroy]
       resources :bookmark_courses, only: [:index, :show, :create, :update, :destroy]
       resources :comments, only: [:index, :show, :create, :update, :destroy]
+
+      resources :notices, only: [:index]
     end
   end
 end

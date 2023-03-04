@@ -1,0 +1,9 @@
+json.call(
+    notice,
+    :id,
+    :user_id,
+    :from,
+    :message,
+    :created_at,
+    :updated_at
+)

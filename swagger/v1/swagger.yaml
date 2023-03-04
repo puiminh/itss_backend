@@ -1,0 +1,82 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/api/v1/courses":
+    get:
+      summary: Get all courses
+      tags:
+      - course
+      responses:
+        '200':
+          description: Get all courses
+  "/api/v1/courses/{course_id}/{by_user_id}":
+    delete:
+      summary: delete a course
+      tags:
+      - course
+      parameters:
+      - name: course_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: by_user_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: course deleted
+  "/api/v1/notices":
+    get:
+      summary: Get all notice
+      tags:
+      - notice
+      responses:
+        '200':
+          description: Get all notices
+  "/api/v1/users":
+    get:
+      summary: Get all user
+      tags:
+      - user
+      responses:
+        '200':
+          description: Get all user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        email:
+                          type: string
+                        user_name:
+                          type: string
+                        role:
+                          type: integer
+                        first_name:
+                          type: string
+                        last_name:
+                          type: string
+                        created_at:
+                          type: string
+                        updated_at:
+                          type: string
+                        avatar:
+                          type: string
+servers:
+- url: http://{defaultHost}
+  variables:
+    defaultHost:
+      default: localhost:3000
