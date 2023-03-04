@@ -4,6 +4,33 @@ info:
   title: API V1
   version: v1
 paths:
+  "/api/v1/collections":
+    get:
+      summary: Get all collections
+      tags:
+      - Collections
+      responses:
+        '200':
+          description: Get all comments
+  "/api/v1/collections/{collection_id}/{by_user_id}":
+    delete:
+      summary: Delete a collection
+      tags:
+      - Collections
+      parameters:
+      - name: collection_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: by_user_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Deleted collection
   "/api/v1/comments":
     get:
       summary: Get all comments

@@ -57,8 +57,10 @@ class Api::V1::CollectionsController < ApplicationController
     end
 
     def destroy
-        collection = Collection.find(params[:id])
-        if collection.destroy
+        @deleted_collection = Collection.find(params[:collection_id])
+
+        if @deleted_collection.destroy
+            notify_delete
             render json: {
                 message: "success"
             }, status: 200      
@@ -133,5 +135,12 @@ class Api::V1::CollectionsController < ApplicationController
             CollectionsCourse.create(collection_id: collection_id, course_id: course_id)
         end
         render json: {message: "Collection and courses updated"}, status: 200
+    end
+
+    private
+
+    def notify_delete
+        msg = "The admin has deleted your collection \'#{@deleted_collection.title}\'"
+        save_notice(@deleted_collection.author.id, params[:by_user_id],msg)
     end
 end

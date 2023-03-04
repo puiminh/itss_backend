@@ -43,6 +43,7 @@ Rails.application.routes.draw do
       put "/collections/courses/:collection_id", to: "collections#update_collection_courses", as: "update_collection_courses"
       post "/collections/course", to: "collections_courses#add_course_to_collection", as: "add_course_to_collection"
       post "/collections/courses", to: "collections_courses#collection_with_courses", as: "collection_with_courses"
+      delete "/collections/:collection_id/:by_user_id", to: "collections#destroy"
 
       #progress
       get "/progress/:course_id/:user_id", to: "progresses#user_progress_course", as: "user_progress_course"
@@ -70,7 +71,7 @@ Rails.application.routes.draw do
       
       resources :users, only: [:index, :show, :create, :update, :destroy]
       resources :courses, only: [:index, :show, :create, :update]
-      resources :collections, only: [:index, :show, :create, :update, :destroy]
+      resources :collections, only: [:index, :show, :create, :update]
       resources :collections_courses, only: [:index, :show, :create, :update, :destroy]
       resources :progresses, only: [:index, :show, :create, :update, :destroy]
 
