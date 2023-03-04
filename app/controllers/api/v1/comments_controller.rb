@@ -12,18 +12,19 @@ class Api::V1::CommentsController < ApplicationController
     end
 
     def create
-        comment = Comment.new({
+        @comment = Comment.new({
             content: params[:content],
             user_id: params[:user_id],
             course_id: params[:course_id]
         })
-        if comment.save
+        if @comment.save
+            notify_save
             render json: {
                 message: "success"
             }, status: 201
         else
             render json: {
-                message: comment.errors
+                message: @comment.errors
             }, status: 400
         end
     end
@@ -83,6 +84,12 @@ class Api::V1::CommentsController < ApplicationController
     end
 
     private
+
+    def notify_save
+        msg = "#{@comment.course.author.first_name}  #{@comment.course.author.last_name} commented on your course \'#{@comment.course.title}\'"
+        save_notice(@comment.course.author.id, @comment.user_id, msg)
+    end
+
     def notify_delete
         msg = "The admin has deleted your comment \'#{@deleted_comment.content}\'"
         save_notice(@deleted_comment.user.id, params[:by_user_id],msg)

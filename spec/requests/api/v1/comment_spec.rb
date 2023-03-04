@@ -31,9 +31,12 @@ RSpec.describe 'Comment API', type: :request do
                     comment.user  = create :user
                   end
                 }
+                let!(:count_noti) {Notice.count}
                 run_test! do |res|
                     
                     expect(response).to have_http_status(201)
+
+                    expect(Notice.count).to eq(count_noti+1)
                 end
             end
         end
