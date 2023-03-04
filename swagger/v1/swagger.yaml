@@ -73,6 +73,25 @@ paths:
       responses:
         '200':
           description: Total comments
+  "/api/v1/comments/{comment_id}/{by_user_id}":
+    delete:
+      summary: Delete a comment
+      tags:
+      - Comments
+      parameters:
+      - name: comment_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: by_user_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Deleted comment
   "/api/v1/courses":
     get:
       summary: Get all courses

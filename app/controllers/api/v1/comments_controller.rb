@@ -42,8 +42,9 @@ class Api::V1::CommentsController < ApplicationController
     end
 
     def destroy
-        comment = Comment.find(params[:id])
-        if comment.destroy
+        @deleted_comment = Comment.find(params[:comment_id])
+        if @deleted_comment.destroy
+            notify_delete
             render json: {
                 message: "success"
             }, status: 200      
@@ -79,5 +80,11 @@ class Api::V1::CommentsController < ApplicationController
             comments: data,
             total: comments.count
         }, status: 200
+    end
+
+    private
+    def notify_delete
+        msg = "The admin has deleted your comment \'#{@deleted_comment.content}\'"
+        save_notice(@deleted_comment.user.id, params[:by_user_id],msg)
     end
 end

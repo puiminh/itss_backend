@@ -56,6 +56,7 @@ Rails.application.routes.draw do
       get "/comments/last_week", to: "comments#new_comments_last_week", as: "new_comments_last_week"
       get "/comments/total", to: "comments#total", as: "comments_total"
       get "/comments/course/:course_id", to: "comments#comments_course", as: "comments_course"
+      delete "/comments/:comment_id/:by_user_id", to: "comments#destroy"
 
       #notice
       get "/notices/user/:user_id", to: "notices#notices_user", as: "notices_user"
@@ -77,7 +78,7 @@ Rails.application.routes.draw do
       resources :vocabularies, only: [:index, :show, :create, :update, :destroy]
       resources :bookmark_collections, only: [:index, :show, :create, :update, :destroy]
       resources :bookmark_courses, only: [:index, :show, :create, :update, :destroy]
-      resources :comments, only: [:index, :show, :create, :update, :destroy]
+      resources :comments, only: [:index, :show, :create, :update]
 
       resources :notices, only: [:index]
     end
