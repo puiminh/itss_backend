@@ -5,8 +5,8 @@ class ApplicationController < ActionController::API
             from: by_user_id,
             message: msg
         })
-        
         if user_id != by_user_id 
+            byebug
             notice.save!    
         end
     end

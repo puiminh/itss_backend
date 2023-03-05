@@ -140,7 +140,7 @@ class Api::V1::CoursesController < ApplicationController
                     course_id: new_course.id
                 })
             end
-
+            notify_duplicate_course
             render json: {
                 course: new_course,
             }, status: 200
@@ -206,12 +206,17 @@ class Api::V1::CoursesController < ApplicationController
 
     private
 
+    def notify_duplicate_course
+        by_user = User.find(params[:user_id])
+        course = Course.find(params[:course_id])
+        msg = "#{by_user.first_name} #{by_user.last_name} has duplicated your course \'#{course.title}\'"
+        save_notice(course.author.id,by_user.id, msg)
+    end
+
     def notify_delete
-        msg = "The admin has deleted your course: #{@deleted_course.title}"
+        by_user =  User.find(params[:by_user_id])
+        msg = "The admin has deleted your course \'#{@deleted_course.title}\'"
         save_notice(@deleted_course.author.id, by_user.id, msg)
     end
 
-    def by_user
-        User.find(params[:by_user_id])
-    end
 end

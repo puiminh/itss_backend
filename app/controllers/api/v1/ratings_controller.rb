@@ -87,14 +87,14 @@ class Api::V1::RatingsController < ApplicationController
     def notify_rated
         user = User.find(params[:user_id])
         course = Course.find(params[:course_id]) 
-        msg = "#{user.first_name} #{user.last_name} rated your course #{course.title}"
+        msg = "#{user.first_name} #{user.last_name} rated your course \'#{course.title}\'"
         save_notice(course.author.id, user.id, msg)
     end
 
     def notify_rerate
         user = User.find(params[:user_id])
         course = Course.find(params[:course_id]) 
-        msg = "#{user.first_name} #{user.last_name} re-rated your course #{course.title}"
+        msg = "#{user.first_name} #{user.last_name} re-rated your course \'#{course.title}\'"
         save_notice(course.author.id, user.id, msg)
     end
 end

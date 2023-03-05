@@ -80,7 +80,7 @@ end
 
 
 # #  Collection
-(1..10).each do |id|
+(1..15).each do |id|
     Collection.create!(
         # each user is assigned an id from 1-20
         title: Faker::Educator.course_name,
@@ -95,7 +95,7 @@ end
     CollectionsCourse.create!(
         # each user is assigned an id from 1-20
         course: Course.find(Faker::Number.within(range: 1..40)),
-        collection: Collection.find(Faker::Number.within(range: 1..10))
+        collection: Collection.find(Faker::Number.within(range: 1..15))
     )
 end
 
@@ -112,7 +112,7 @@ end
 (1..15).each do |id|
     BookmarkCollection.create!(
         # each user is assigned an id from 1-20
-        collection: Collection.find(Faker::Number.within(range: 1..10)),
+        collection: Collection.find(Faker::Number.within(range: 1..15)),
         user: User.find(Faker::Number.within(range: 1..50))
     )
 end

@@ -19,7 +19,7 @@ class Api::V1::BookmarkCoursesController < ApplicationController
         if (bookmark_course)
             if bookmark_course.destroy
                 render json: {
-                    message: "delete success"
+                    message: "delete successfully"
                 }, status: 200      
             else
                 render json: {
@@ -33,9 +33,10 @@ class Api::V1::BookmarkCoursesController < ApplicationController
             })
     
             if bookmark_course.save
+                notify_create
                 render json: {
                     bookmark: bookmark_course,
-                    message: "create success"
+                    message: "create successfully"
                 }, status: 201
             else
                 render json: {
@@ -54,7 +55,7 @@ class Api::V1::BookmarkCoursesController < ApplicationController
             }, status: 200
         else
             render json: {
-                message: "error"
+                error: bookmark_course.errors
             }, status: 400
         end
     end
@@ -70,5 +71,14 @@ class Api::V1::BookmarkCoursesController < ApplicationController
                 message: "failure"
             }, status: 400      
         end
+    end
+
+    private
+    
+    def notify_create
+        user = User.find(params[:user_id])
+        course = Course.find(params[:course_id])
+        msg = "#{user.first_name} #{user.last_name} has bookmarked your course \'#{course.title}\'"
+        save_notice(course.author.id, user.id, msg)
     end
 end
