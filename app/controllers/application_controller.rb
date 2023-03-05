@@ -8,5 +8,9 @@ class ApplicationController < ActionController::API
         if user_id != by_user_id 
             notice.save!    
         end
+
+        Pusher.trigger("user#{user_id}", 'nocti', 
+            user: "user#{by_user_id}"
+        )
     end
 end

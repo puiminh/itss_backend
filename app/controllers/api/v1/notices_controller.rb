@@ -11,7 +11,7 @@ class Api::V1::NoticesController < ApplicationController
         notices = notices.map do |notice|
             {
                 notice: notice,
-                user: notice.user
+                user: notice.from_user
             }
         end
         render json: { 

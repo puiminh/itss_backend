@@ -7,8 +7,8 @@ class User < ApplicationRecord
   has_many :courses, foreign_key: :author_id, :dependent => :destroy
   has_many :collections, foreign_key: :author_id, :dependent => :delete_all
 
-  has_many :notices, :dependent => :delete_all
-  has_many :notices, foreign_key: :from, :dependent => :delete_all
+  has_many :notices, :dependent => :destroy
+  has_many :notices, foreign_key: :from, :dependent => :destroy
 
   # author: linnh
   # association
