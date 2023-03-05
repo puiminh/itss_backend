@@ -6,7 +6,6 @@ class ApplicationController < ActionController::API
             message: msg
         })
         if user_id != by_user_id 
-            byebug
             notice.save!    
         end
     end

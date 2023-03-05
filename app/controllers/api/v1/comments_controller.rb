@@ -86,7 +86,7 @@ class Api::V1::CommentsController < ApplicationController
     private
 
     def notify_save
-        msg = "#{@comment.course.author.first_name}  #{@comment.course.author.last_name} commented on your course \'#{@comment.course.title}\'"
+        msg = "#{@comment.author.first_name}  #{@comment.author.last_name} commented on your course \'#{@comment.course.title}\'"
         save_notice(@comment.course.author.id, @comment.user_id, msg)
     end
 

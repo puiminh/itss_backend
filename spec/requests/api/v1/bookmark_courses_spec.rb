@@ -34,7 +34,6 @@ RSpec.describe 'api/v1/bookmark_courses', type: :request do
       response(200, 'successful') do
         let(:notice_count) {Notice.count}
         after do |example|
-          byebug
           example.metadata[:response][:content] = {
             'application/json' => {
               example: JSON.parse(response.body, symbolize_names: true)
