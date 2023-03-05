@@ -35,7 +35,7 @@ class Api::V1::CollectionsCoursesController < ApplicationController
             }, status: 200
         else
             render json: {
-                message: "error"
+                error: collections_course.errors
             }, status: 400
         end
     end
@@ -66,7 +66,7 @@ class Api::V1::CollectionsCoursesController < ApplicationController
         else
             render json: {
                 errors: "You are not the author of this collection"
-            }, status: :unprocessable
+            }, status: :unprocessable_entity
         end
     end
 

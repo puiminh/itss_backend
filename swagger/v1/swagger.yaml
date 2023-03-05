@@ -4,6 +4,78 @@ info:
   title: API V1
   version: v1
 paths:
+  "/api/v1/bookmark_collections":
+    get:
+      summary: list bookmark_collections
+      tags:
+      - Bookmark collections
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create bookmark_collection
+      tags:
+      - Bookmark collections
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                collection_id:
+                  type: integer
+              required:
+              - user_id
+              - collection_id
+  "/api/v1/bookmark_collections/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show bookmark_collection
+      tags:
+      - Bookmark collections
+      responses:
+        '200':
+          description: successful
+    put:
+      summary: update bookmark_collection
+      tags:
+      - Bookmark collections
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                collection_id:
+                  type: integer
+              required:
+              - user_id
+              - collection_id
+    delete:
+      summary: delete bookmark_collection
+      tags:
+      - Bookmark collections
+      responses:
+        '200':
+          description: successful
   "/api/v1/bookmark_courses":
     get:
       summary: list bookmark_courses
@@ -76,14 +148,228 @@ paths:
       responses:
         '200':
           description: successful
-  "/api/v1/collections":
+  "/api/v1/collections/course":
+    post:
+      summary: add_course_to_collection collections_course
+      tags:
+      - Course collections
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                course_id:
+                  type: integer
+                collection_id:
+                  type: integer
+              required:
+              - course_id
+              - collection_id
+  "/api/v1/collections/courses":
+    post:
+      summary: collection_with_courses collections_course
+      tags:
+      - Course collections
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                collection:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    desc:
+                      type: string
+                    image:
+                      type: string
+                    author_id:
+                      type: integer
+                courses:
+                  type: array
+                  items:
+                    type: integer
+              required:
+              - collection
+              - courses
+  "/api/v1/courses_collections/{type}/{keyword}":
+    parameters:
+    - name: type
+      in: path
+      description: type
+      required: true
+      schema:
+        type: string
+    - name: keyword
+      in: path
+      description: keyword
+      required: true
+      schema:
+        type: string
     get:
-      summary: Get all collections
+      summary: keyword_find collections_course
+      tags:
+      - Course collections
+      responses:
+        '200':
+          description: successful
+  "/api/v1/collections_courses":
+    get:
+      summary: list collections_courses
+      tags:
+      - Course collections
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create collections_course
+      tags:
+      - Course collections
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                course_id:
+                  type: integer
+                collection_id:
+                  type: integer
+              required:
+              - course_id
+              - collection_id
+  "/api/v1/collections_courses/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show collections_course
+      tags:
+      - Course collections
+      responses:
+        '200':
+          description: successful
+    put:
+      summary: update collections_course
+      tags:
+      - Course collections
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                course_id:
+                  type: integer
+                collection_id:
+                  type: integer
+              required:
+              - course_id
+              - collection_id
+    delete:
+      summary: delete collections_course
+      tags:
+      - Course collections
+      responses:
+        '200':
+          description: successful
+  "/api/v1/collections/recommended":
+    get:
+      summary: recommended_collections collection
       tags:
       - Collections
       responses:
         '200':
-          description: Get all comments
+          description: successful
+  "/api/v1/collections/last_week":
+    get:
+      summary: new_collections_last_week collection
+      tags:
+      - Collections
+      responses:
+        '200':
+          description: successful
+  "/api/v1/collections/total":
+    get:
+      summary: total collection
+      tags:
+      - Collections
+      responses:
+        '200':
+          description: successful
+  "/api/v1/collections/created/{user_id}":
+    parameters:
+    - name: user_id
+      in: path
+      description: user id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: created_collections collection
+      tags:
+      - Collections
+      responses:
+        '200':
+          description: successful
+  "/api/v1/collections/courses/{collection_id}":
+    put:
+      summary: update_collection_courses collection
+      tags:
+      - Collections
+      parameters:
+      - name: collection_id
+        in: path
+        description: collection_id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                collection:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    desc:
+                      type: string
+                courses:
+                  type: array
+                  items:
+                    type: integer
+              required:
+              - collection
+              - course
   "/api/v1/collections/{collection_id}/{by_user_id}":
     delete:
       summary: Delete a collection
@@ -103,6 +389,74 @@ paths:
       responses:
         '200':
           description: Deleted collection
+  "/api/v1/collections":
+    get:
+      summary: list collections
+      tags:
+      - Collections
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create collection
+      tags:
+      - Collections
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: object
+                desc:
+                  type: string
+                image:
+                  type: string
+                author_id:
+                  type: integer
+              required:
+              - title
+              - author_id
+  "/api/v1/collections/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show collection
+      tags:
+      - Collections
+      responses:
+        '200':
+          description: successful
+    put:
+      summary: update collection
+      tags:
+      - Collections
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                desc:
+                  type: string
+                image:
+                  type: string
   "/api/v1/comments":
     get:
       summary: Get all comments
@@ -191,6 +545,45 @@ paths:
       responses:
         '200':
           description: Deleted comment
+  "/api/v1/comments/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show comment
+      tags:
+      - Comments
+      responses:
+        '200':
+          description: successful
+    put:
+      summary: update comment
+      tags:
+      - Comments
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+                user_id:
+                  type: integer
+                course_id:
+                  type: integer
+              required:
+              - user_id
+              - content
+              - course_id
   "/api/v1/courses/recent/{user_id}":
     parameters:
     - name: user_id
@@ -485,14 +878,177 @@ paths:
       responses:
         '200':
           description: successful
-  "/api/v1/ratings":
+  "/api/v1/progress/{course_id}/{user_id}":
+    parameters:
+    - name: course_id
+      in: path
+      description: course_id
+      required: true
+      schema:
+        type: string
+    - name: user_id
+      in: path
+      description: user_id
+      required: true
+      schema:
+        type: string
     get:
-      summary: Get all ratings
+      summary: user_progress_course progress
+      tags:
+      - Progresses
+      responses:
+        '200':
+          description: successful
+  "/api/v1/progress/{user_id}":
+    parameters:
+    - name: user_id
+      in: path
+      description: user_id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: user_progress progress
+      tags:
+      - Progresses
+      responses:
+        '200':
+          description: successful
+  "/api/v1/progress/update":
+    post:
+      summary: update_progress progress
+      tags:
+      - Progresses
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                point:
+                  type: integer
+                user_id:
+                  type: integer
+                course_id:
+                  type: integer
+                vocabulary_id:
+                  type: integer
+              required:
+              - point
+              - user_id
+              - course_id
+              - vocabulary_id
+  "/api/v1/progresses":
+    get:
+      summary: list progresses
+      tags:
+      - Progresses
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create progress
+      tags:
+      - Progresses
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                point:
+                  type: integer
+                user_id:
+                  type: integer
+                course_id:
+                  type: integer
+                vocabulary_id:
+                  type: integer
+              required:
+              - point
+              - user_id
+              - course_id
+              - vocabulary_id
+  "/api/v1/progresses/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show progress
+      tags:
+      - Progresses
+      responses:
+        '200':
+          description: successful
+    put:
+      summary: update progress
+      tags:
+      - Progresses
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                point:
+                  type: integer
+                user_id:
+                  type: integer
+                course_id:
+                  type: integer
+                vocabulary_id:
+                  type: integer
+              required:
+              - point
+              - user_id
+              - course_id
+              - vocabulary_id
+    delete:
+      summary: delete progress
+      tags:
+      - Progresses
+      responses:
+        '200':
+          description: successful
+  "/api/v1/ratings/course/{course_id}":
+    parameters:
+    - name: course_id
+      in: path
+      description: course_id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: course_rating rating
       tags:
       - Ratings
       responses:
         '200':
-          description: Get all ratings
+          description: successful
+  "/api/v1/ratings":
+    get:
+      summary: list ratings
+      tags:
+      - Ratings
+      responses:
+        '200':
+          description: successful
     post:
       summary: Rating course
       tags:
@@ -517,42 +1073,299 @@ paths:
               - star
               - user_id
               - course_id
-  "/api/v1/users":
+  "/api/v1/ratings/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
     get:
-      summary: Get all user
+      summary: show rating
       tags:
-      - User
+      - Ratings
       responses:
         '200':
-          description: Get all user
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: integer
-                        email:
-                          type: string
-                        user_name:
-                          type: string
-                        role:
-                          type: integer
-                        first_name:
-                          type: string
-                        last_name:
-                          type: string
-                        created_at:
-                          type: string
-                        updated_at:
-                          type: string
-                        avatar:
-                          type: string
+          description: successful
+    put:
+      summary: update rating
+      tags:
+      - Ratings
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                star:
+                  type: integer
+                user_id:
+                  type: integer
+                course_id:
+                  type: integer
+              required:
+              - star
+              - user_id
+              - course_id
+    delete:
+      summary: delete rating
+      tags:
+      - Ratings
+      responses:
+        '200':
+          description: successful
+  "/api/v1/users":
+    post:
+      summary: create user
+      tags:
+      - Users
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                    password:
+                      type: string
+                    password_confirmation:
+                      type: string
+                    first_name:
+                      type: string
+                    last_name:
+                      type: string
+                  required:
+                  - email
+                  - password
+                  - password_confirmation
+    get:
+      summary: list users
+      tags:
+      - Users
+      responses:
+        '200':
+          description: successful
+  "/api/v1/users/last_week":
+    get:
+      summary: new_users_last_week user
+      tags:
+      - Users
+      responses:
+        '200':
+          description: successful
+  "/api/v1/users/total":
+    get:
+      summary: total user
+      tags:
+      - Users
+      responses:
+        '200':
+          description: successful
+  "/api/v1/users/created/courses_collections/{user_id}":
+    parameters:
+    - name: user_id
+      in: path
+      description: user_id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: created_courses_collections user
+      tags:
+      - Users
+      responses:
+        '200':
+          description: successful
+  "/api/v1/users/bookmarked/courses_collections/{user_id}":
+    parameters:
+    - name: user_id
+      in: path
+      description: user_id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: bookmarked_courses_collections user
+      tags:
+      - Users
+      responses:
+        '200':
+          description: successful
+  "/api/v1/users/{user_id}":
+    parameters:
+    - name: user_id
+      in: path
+      description: user_id
+      required: true
+      schema:
+        type: string
+    put:
+      summary: update user
+      tags:
+      - Users
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                avatar:
+                  type: string
+                role:
+                  type: integer
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+              required:
+              - title
+              - content
+  "/api/v1/users/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show user
+      tags:
+      - Users
+      responses:
+        '200':
+          description: successful
+    delete:
+      summary: delete user
+      tags:
+      - Users
+      responses:
+        '200':
+          description: successful
+  "/api/v1/vocabularies/need/{user_id}/{course_id}":
+    parameters:
+    - name: user_id
+      in: path
+      description: user_id
+      required: true
+      schema:
+        type: string
+    - name: course_id
+      in: path
+      description: course_id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: need_learn vocabulary
+      tags:
+      - Vocabularies
+      responses:
+        '200':
+          description: successful
+  "/api/v1/vocabularies":
+    get:
+      summary: list vocabularies
+      tags:
+      - Vocabularies
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create vocabulary
+      tags:
+      - Vocabularies
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                word:
+                  type: string
+                define:
+                  type: string
+                link:
+                  type: string
+                kind:
+                  type: string
+                course_id:
+                  type: integer
+              required:
+              - word
+              - course_id
+              - define
+  "/api/v1/vocabularies/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show vocabulary
+      tags:
+      - Vocabularies
+      responses:
+        '200':
+          description: successful
+    put:
+      summary: update vocabulary
+      tags:
+      - Vocabularies
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                word:
+                  type: string
+                define:
+                  type: string
+                link:
+                  type: string
+                kind:
+                  type: string
+                course_id:
+                  type: integer
+              required:
+              - word
+              - course_id
+              - define
+    delete:
+      summary: delete vocabulary
+      tags:
+      - Vocabularies
+      responses:
+        '200':
+          description: successful
 servers:
 - url: http://{defaultHost}
   variables:

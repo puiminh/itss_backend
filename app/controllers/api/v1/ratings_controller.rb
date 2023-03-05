@@ -64,7 +64,7 @@ class Api::V1::RatingsController < ApplicationController
 
     def destroy
         rating = Rating.find(params[:id])
-        if collections_course.destroy
+        if rating.destroy
             render json: {
                 message: "success"
             }, status: 200      
