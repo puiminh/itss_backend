@@ -1,4 +1,20 @@
 class Api::V1::CollectionsController < ApplicationController
+    def all_collection
+        all_collection = Collection.all
+        collection_list = []
+        all_collection.each do |collection|
+                author = collection.author
+                collection_list << {
+                    collection: collection,
+                    contain: collection.collections_courses.count,
+                    author: author
+                }
+        end    
+        render json: {
+            data: collection_list,
+        }, status: 200
+    end
+
     def index
         render json: {
             data: Collection.all
@@ -74,9 +90,18 @@ class Api::V1::CollectionsController < ApplicationController
     def created_collections
         user = User.find(params[:user_id])
         collections = user.collections
+        collection_list = []
+        collections.each do |collection|
+                author = collection.author
+                collection_list << {
+                    collection: collection,
+                    contain: collection.collections_courses.count,
+                    author: author
+                }
+        end    
         render json: {
-            data: collections
-        }
+            data: collection_list,
+        }, status: 200
     end
 
     def recommended_collections
@@ -140,7 +165,7 @@ class Api::V1::CollectionsController < ApplicationController
     private
 
     def notify_delete
-        msg = "The admin has deleted your collection \'#{@deleted_collection.title}\'"
+        msg = " has deleted your collection \'#{@deleted_collection.title}\'"
         save_notice(@deleted_collection.author.id, params[:by_user_id],msg)
     end
 end

@@ -1,4 +1,22 @@
 class Api::V1::CommentsController < ApplicationController
+    
+    def all_comment
+        all_comment = Comment.all
+        comment_list = []
+        all_comment.each do |comment|
+                author = comment.user
+                course = comment.course
+                comment_list << {
+                    comment: comment,
+                    course: course,
+                    author: author
+                }
+        end    
+        render json: {
+            data: comment_list,
+        }, status: 200
+    end
+
     def index
         render json: {
             data: Comment.all
@@ -86,12 +104,12 @@ class Api::V1::CommentsController < ApplicationController
     private
 
     def notify_save
-        msg = "#{@comment.user.first_name}  #{@comment.user.last_name} commented on your course \'#{@comment.course.title}\'"
+        msg = "commented on your course \'#{@comment.course.title}\'"
         save_notice(@comment.course.author.id, @comment.user_id, msg)
     end
 
     def notify_delete
-        msg = "The admin has deleted your comment \'#{@deleted_comment.content}\'"
+        msg = "has deleted your comment \'#{@deleted_comment.content}\'"
         save_notice(@deleted_comment.user.id, params[:by_user_id],msg)
     end
 end

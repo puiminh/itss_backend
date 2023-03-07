@@ -78,7 +78,7 @@ class Api::V1::BookmarkCoursesController < ApplicationController
     def notify_create
         user = User.find(params[:user_id])
         course = Course.find(params[:course_id])
-        msg = "#{user.first_name} #{user.last_name} has bookmarked your course \'#{course.title}\'"
+        msg = " has bookmarked your course \'#{course.title}\'"
         save_notice(course.author.id, user.id, msg)
     end
 end

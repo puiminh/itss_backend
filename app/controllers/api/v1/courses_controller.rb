@@ -1,5 +1,21 @@
 class Api::V1::CoursesController < ApplicationController
     # before_action :authenticate_user!
+    def all_course
+        all_course = Course.all
+        course_list = []
+        all_course.each do |course|
+                author = course.author
+                course_list << {
+                    course: course,
+                    contain: course.vocabularies.count,
+                    author: author
+                }
+        end    
+        render json: {
+            data: course_list,
+        }, status: 200
+    end
+
     def index
         render json: {
             data: Course.all
@@ -64,9 +80,18 @@ class Api::V1::CoursesController < ApplicationController
     def created_courses
         user = User.find(params[:user_id])
         courses = user.courses
+        course_list = []
+        courses.each do |course|
+                author = course.author
+                course_list << {
+                    course: course,
+                    contain: course.vocabularies.count,
+                    author: author
+                }
+        end    
         render json: {
-            data: courses
-        }
+            data: course_list,
+        }, status: 200
     end
 
     def recent_courses
@@ -209,13 +234,13 @@ class Api::V1::CoursesController < ApplicationController
     def notify_duplicate_course
         by_user = User.find(params[:user_id])
         course = Course.find(params[:course_id])
-        msg = "#{by_user.first_name} #{by_user.last_name} has duplicated your course \'#{course.title}\'"
+        msg = " has duplicated your course \'#{course.title}\'"
         save_notice(course.author.id,by_user.id, msg)
     end
 
     def notify_delete
         by_user =  User.find(params[:by_user_id])
-        msg = "The admin has deleted your course \'#{@deleted_course.title}\'"
+        msg = " has deleted your course \'#{@deleted_course.title}\'"
         save_notice(@deleted_course.author.id, by_user.id, msg)
     end
 

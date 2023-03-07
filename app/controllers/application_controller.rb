@@ -5,6 +5,7 @@ class ApplicationController < ActionController::API
             from: by_user_id,
             message: msg
         })
+        # puts(user_id, by_user_id, msg)
         if user_id != by_user_id 
             notice.save!    
         end

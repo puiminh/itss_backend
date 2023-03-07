@@ -31,7 +31,10 @@ class Api::V1::UsersController < ApplicationController
     end
 
     def show 
-        @user = User.find(params[:id])
+        user = User.find(params[:id])
+        render json: {
+            data: user
+        }, status: 200
     end
 
     def update

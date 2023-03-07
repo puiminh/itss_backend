@@ -27,6 +27,7 @@ Rails.application.routes.draw do
       get "/courses/total", to: "courses#total", as: "courses_total"
       get "/courses/:course_id/random_list_word", to: "courses#random_list_word", as: "random_list_word"
       get "/courses/created/:user_id", to: "courses#created_courses", as: "created_courses"
+      get "/courses/all_course", to: "courses#all_course", as: "all_course"
       post "/courses/duplicate/:user_id", to: "courses#duplicate_course", as: "duplicate_course"
       post "/courses/vocabularies", to: "courses#course_with_vocabularies", as: "course_with_vocabularies"
       put "/courses/vocabularies/:course_id", to: "courses#update_course_vocabularies", as: "update_course_vocabularies"
@@ -40,6 +41,7 @@ Rails.application.routes.draw do
       get "/collections/last_week", to: "collections#new_collections_last_week", as: "new_collections_last_week"
       get "/collections/total", to: "collections#total", as: "collections_total"
       get "/collections/created/:user_id", to: "collections#created_collections", as: "created_collections"
+      get "/collections/all_collection", to: "collections#all_collection", as: "all_collection"
       put "/collections/courses/:collection_id", to: "collections#update_collection_courses", as: "update_collection_courses"
       post "/collections/course", to: "collections_courses#add_course_to_collection", as: "add_course_to_collection"
       post "/collections/courses", to: "collections_courses#collection_with_courses", as: "collection_with_courses"
@@ -57,6 +59,7 @@ Rails.application.routes.draw do
       get "/comments/last_week", to: "comments#new_comments_last_week", as: "new_comments_last_week"
       get "/comments/total", to: "comments#total", as: "comments_total"
       get "/comments/course/:course_id", to: "comments#comments_course", as: "comments_course"
+      get "/comments/all_comment", to: "comments#all_comment", as: "all_comment"
       delete "/comments/:comment_id/:by_user_id", to: "comments#destroy"
 
       #notice
